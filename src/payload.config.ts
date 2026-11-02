@@ -22,9 +22,18 @@ import { pt } from '@payloadcms/translations/languages/pt'
 import { en } from '@payloadcms/translations/languages/en'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { isLocalDatabase } from './utilities/isLocalDatabase'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// Without the Blob token, uploads land on this machine's disk while their rows go to the shared
+// database, so production would show broken images. `vercel env pull` brings both together.
+if (!isLocalDatabase(process.env.DATABASE_URL) && !process.env.BLOB_READ_WRITE_TOKEN) {
+  throw new Error(
+    'BLOB_READ_WRITE_TOKEN is required when DATABASE_URL points to the shared database. Run `vercel env pull .env.local`.',
+  )
+}
 
 export default buildConfig({
   admin: {
@@ -69,6 +78,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    // Schema changes only go through migrations (src/migrations), never through dev-mode push.
+    // This keeps `pnpm dev` from silently altering the shared production database.
+    // Set DATABASE_PUSH=true to opt back in when pointing at a throwaway local database.
+    push: process.env.DATABASE_PUSH === 'true',
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   collections: [Pages, Projects, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

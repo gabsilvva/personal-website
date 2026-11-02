@@ -13,14 +13,17 @@ const BeforeDashboard: React.FC = () => {
         <h4>Bem-vindo ao painel do site!</h4>
       </Banner>
       <ul className={`${baseClass}__instructions`}>
-        <li>
-          <SeedButton />
-          {' com o conteúdo do layout e depois '}
-          <a href="/" target="_blank">
-            veja o site
-          </a>
-          . Isso apaga as páginas, projetos e mídias atuais.
-        </li>
+        {/* The seed route is disabled on Vercel (see next/seed/route.ts) */}
+        {!process.env.VERCEL && (
+          <li>
+            <SeedButton />
+            {' com o conteúdo do layout e depois '}
+            <a href="/" target="_blank">
+              veja o site
+            </a>
+            . Isso apaga as páginas, projetos e mídias atuais.
+          </li>
+        )}
         <li>
           O conteúdo de cada página fica em <strong>Páginas</strong>, conforme o template escolhido. Contato,
           redes sociais, números e stack ficam em <strong>Configurações</strong>.

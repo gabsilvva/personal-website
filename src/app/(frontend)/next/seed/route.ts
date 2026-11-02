@@ -6,6 +6,12 @@ import { headers } from 'next/headers'
 export const maxDuration = 60 // This function can run for a maximum of 60 seconds
 
 export async function POST(): Promise<Response> {
+  // Seeding wipes pages, projects and media. On Vercel that is the shared production database,
+  // and the seed images are not bundled into the function anyway. Seed from the CLI instead.
+  if (process.env.VERCEL) {
+    return new Response('Seeding is disabled on Vercel. Run `pnpm seed` locally.', { status: 403 })
+  }
+
   const payload = await getPayload({ config })
   const requestHeaders = await headers()
 

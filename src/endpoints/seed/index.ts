@@ -1,4 +1,5 @@
 import type { CollectionSlug, Payload, PayloadRequest } from 'payload'
+import { commitTransaction, initTransaction, killTransaction } from 'payload'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -16,8 +17,21 @@ const context = { disableRevalidate: true }
 
 /**
  * Fills the CMS with the content of the Figma design. Clears pages, projects and media first.
+ * Runs in a single transaction so a failure halfway through does not leave the database wiped.
  */
-export const seed = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
+export const seed = async (args: { payload: Payload; req: PayloadRequest }) => {
+  const shouldCommit = await initTransaction(args.req)
+
+  try {
+    await seedContent(args)
+    if (shouldCommit) await commitTransaction(args.req)
+  } catch (err) {
+    if (shouldCommit) await killTransaction(args.req)
+    throw err
+  }
+}
+
+const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
   payload.logger.info('Seeding database...')
 
   payload.logger.info('— Clearing pages, projects and media...')
