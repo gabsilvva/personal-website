@@ -7,9 +7,9 @@ import './index.scss'
 
 const SuccessMessage: React.FC = () => (
   <div>
-    Database seeded! You can now{' '}
+    Conteúdo criado! Agora você pode{' '}
     <a target="_blank" href="/">
-      visit your website
+      ver o site
     </a>
   </div>
 )
@@ -24,15 +24,15 @@ export const SeedButton: React.FC = () => {
       e.preventDefault()
 
       if (seeded) {
-        toast.info('Database already seeded.')
+        toast.info('O conteúdo já foi criado.')
         return
       }
       if (loading) {
-        toast.info('Seeding already in progress.')
+        toast.info('A criação já está em andamento.')
         return
       }
       if (error) {
-        toast.error(`An error occurred, please refresh and try again.`)
+        toast.error('Ocorreu um erro. Recarregue a página e tente de novo.')
         return
       }
 
@@ -48,7 +48,7 @@ export const SeedButton: React.FC = () => {
                     resolve(true)
                     setSeeded(true)
                   } else {
-                    reject('An error occurred while seeding.')
+                    reject('Ocorreu um erro ao criar o conteúdo.')
                   }
                 })
                 .catch((error) => {
@@ -59,9 +59,9 @@ export const SeedButton: React.FC = () => {
             }
           }),
           {
-            loading: 'Seeding with data....',
+            loading: 'Criando o conteúdo...',
             success: <SuccessMessage />,
-            error: 'An error occurred while seeding.',
+            error: 'Ocorreu um erro ao criar o conteúdo.',
           },
         )
       } catch (err) {
@@ -73,14 +73,14 @@ export const SeedButton: React.FC = () => {
   )
 
   let message = ''
-  if (loading) message = ' (seeding...)'
-  if (seeded) message = ' (done!)'
+  if (loading) message = ' (criando...)'
+  if (seeded) message = ' (pronto!)'
   if (error) message = ` (error: ${error})`
 
   return (
     <Fragment>
       <button className="seedButton" onClick={handleClick}>
-        Seed your database
+        Popule o banco
       </button>
       {message}
     </Fragment>

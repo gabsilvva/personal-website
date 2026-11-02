@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 10761">
+<path id="Ellipse 8" d="M63.5 32C63.5 49.397 49.397 63.5 32 63.5C14.603 63.5 0.5 49.397 0.5 32C0.5 14.603 14.603 0.5 32 0.5C49.397 0.5 63.5 14.603 63.5 32Z" stroke="#2C2C2C"/>
+<g id="Frame">
+<path id="Vector" d="M41 23.6V40.4C41 40.7314 40.7314 41 40.4 41H23.6C23.2686 41 23 40.7314 23 40.4V23.6C23 23.2686 23.2686 23 23.6 23H40.4C40.7314 23 41 23.2686 41 23.6Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#636363"/>
+</g>
+</g>
+</svg>

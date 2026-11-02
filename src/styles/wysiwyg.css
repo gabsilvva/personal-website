@@ -1,0 +1,54 @@
+@layer components {
+  /* Long-form text, e.g. the legal pages and project descriptions */
+  .wysiwyg {
+    @apply text-sm leading-[1.8] font-light text-light-gray;
+
+    h2,
+    h3,
+    h4 {
+      @apply mt-12 mb-8 text-2xl max-sm:text-xl first:mt-0;
+    }
+
+    p {
+      @apply mb-6 text-sm last:mb-0;
+    }
+
+    ul,
+    ol {
+      @apply mb-6 pl-5;
+
+      li {
+        @apply text-sm leading-[1.8];
+      }
+    }
+
+    ul li {
+      list-style: disc;
+    }
+
+    ol li {
+      list-style: decimal;
+    }
+
+    a {
+      @apply text-white underline;
+    }
+
+    strong {
+      @apply font-medium text-white;
+    }
+  }
+
+  /* Short statements where bold marks the words that stand out */
+  .emphasis {
+    @apply text-lg leading-[1.8] font-normal text-gray max-sm:text-base;
+
+    p {
+      @apply mb-[1.8em] text-lg font-normal text-gray last:mb-0 max-sm:text-base;
+    }
+
+    strong {
+      @apply font-semibold text-light-gray;
+    }
+  }
+}

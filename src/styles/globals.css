@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+
+@import './colors.css';
+@import './texts.css';
+@import './wysiwyg.css';
+
+@theme {
+  --breakpoint-sm: 1024px;
+
+  --spacing-nav: 80px;
+  --spacing-nav-mob: 72px;
+
+  --spacing-pd: 40px;
+  --spacing-pm: 20px;
+
+  --spacing-between: 200px;
+  --spacing-between-mob: 96px;
+
+  --container-max: 1360px;
+}
+
+@theme inline {
+  --font-sans: var(--font-jakarta);
+  --font-serif: var(--font-fraunces);
+}
+
+/* Search dialog entrance */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+/* "Online" dot next to the local time */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  80%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Infinite horizontal scroll: the track holds two identical halves and slides by one */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Desktop windows tall enough for a section pinned to the viewport (see the Process section) */
+@custom-variant pin (@media (width >= 1024px) and (height >= 780px));
+
+:root {
+  /* Fraunces is used with its "wonky" alternates throughout the design */
+  --fraunces-axes: 'SOFT' 0, 'WONK' 1;
+}
+
+@layer base {
+  ::selection {
+    @apply bg-white text-black;
+  }
+
+  html {
+    @apply overflow-x-hidden scroll-smooth bg-black;
+  }
+
+  body {
+    @apply bg-black font-sans text-light-gray antialiased;
+  }
+
+  figure {
+    @apply m-0;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  /* Loadscreen: hidden right away once seen in the session; the page doesn't scroll behind it */
+  html[data-loaded] #loadscreen {
+    display: none;
+  }
+
+  html:not([data-loaded]) body {
+    overflow: hidden;
+  }
+}

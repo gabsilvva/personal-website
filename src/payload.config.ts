@@ -8,10 +8,18 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
-import { Footer } from './Footer/config'
-import { Header } from './Header/config'
+import { Footer } from './globals/Footer'
+import { Header } from './globals/Header'
+import { Settings } from './globals/Settings'
+import { AboutPage } from './globals/pages/AboutPage'
+import { HomePage } from './globals/pages/HomePage'
+import { ProjectsPage } from './globals/pages/ProjectsPage'
+import { UsesPage } from './globals/pages/UsesPage'
 import { plugins } from './plugins'
+import { pt } from '@payloadcms/translations/languages/pt'
+import { en } from '@payloadcms/translations/languages/en'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
@@ -62,9 +70,23 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Projects, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [HomePage, AboutPage, ProjectsPage, UsesPage, Settings, Header, Footer],
+  // Admin interface language
+  i18n: {
+    supportedLanguages: { pt, en },
+    fallbackLanguage: 'pt',
+  },
+  // Content languages. Empty English fields fall back to Portuguese.
+  localization: {
+    locales: [
+      { label: 'Português', code: 'pt' },
+      { label: 'English', code: 'en' },
+    ],
+    defaultLocale: 'pt',
+    fallback: true,
+  },
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

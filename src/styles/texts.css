@@ -1,0 +1,38 @@
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-normal leading-none text-white;
+    font-variation-settings: var(--fraunces-axes);
+  }
+  /* Display sizes scale with the viewport and reach the design size around 1240px */
+  h1 {
+    font-size: clamp(2.75rem, 1rem + 6.5vw, 6rem);
+  }
+  h2 {
+    font-size: clamp(2.25rem, 1rem + 4vw, 4rem);
+  }
+  h3 {
+    font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+  }
+  h4 {
+    @apply text-[40px] max-sm:text-[28px];
+  }
+  h5 {
+    @apply text-[32px] max-sm:text-[24px];
+  }
+  h6 {
+    @apply text-[24px] max-sm:text-[20px];
+  }
+  p {
+    @apply font-sans text-base leading-[1.8] font-light text-light-gray;
+  }
+}
+
+@utility font-display {
+  @apply font-serif font-normal;
+  font-variation-settings: var(--fraunces-axes);
+}
