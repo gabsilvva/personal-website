@@ -16,7 +16,9 @@ const MAX_DURATION = 6000 // never blocks the site
  * Runs before the page paints: visitors who already saw the loadscreen in this session never
  * see it again, not even for a frame. Inline in <head>, so it must stay tiny and self-contained.
  */
-export const loadscreenScript = `try{if(sessionStorage.getItem('${STORAGE_KEY}'))document.documentElement.setAttribute('${SEEN_ATTRIBUTE}','')}catch(e){}`
+// Skipped when already seen or with reduced motion; if the app never hydrates, it still
+// leaves after 8s (the intro lasts up to 6s) so the page is never stuck behind it
+export const loadscreenScript = `(function(){var d=document.documentElement,done=function(){d.setAttribute('${SEEN_ATTRIBUTE}','')};try{if(sessionStorage.getItem('${STORAGE_KEY}')||matchMedia('(prefers-reduced-motion: reduce)').matches)done()}catch(e){}setTimeout(done,8000)})()`
 
 const noSubscribe = () => () => {}
 const alreadySeen = () => document.documentElement.hasAttribute(SEEN_ATTRIBUTE)
@@ -126,7 +128,6 @@ export default function Loadscreen() {
           alt=""
           width={122}
           height={32}
-          priority
           className="absolute top-1/2 left-1/2 -translate-1/2 motion-safe:animate-[fade-in_600ms_ease-out]"
         />
 

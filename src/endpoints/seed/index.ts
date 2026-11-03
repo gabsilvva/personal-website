@@ -203,7 +203,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       p('Este site não possui formulários nem área de cadastro. Os únicos dados tratados são:'),
       ul(
         [
-          'Dados de navegação: informações anônimas como páginas visitadas, tempo de permanência, tipo de dispositivo, navegador e localização aproximada, coletadas por ferramentas de análise.',
+          'Dados de navegação: informações como páginas visitadas, tempo de permanência, tipo de dispositivo, navegador e localização aproximada, coletadas pelo Google Analytics somente se você aceitar os cookies de análise.',
         ],
         [
           'Dados de contato: quando você clica no botão do WhatsApp, a conversa acontece fora deste site. Nome, número e mensagens que você enviar são usados apenas para responder ao seu contato e conduzir uma possível proposta.',
@@ -219,14 +219,14 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       p('Não vendo, alugo ou compartilho seus dados com terceiros para fins de marketing.'),
       h2('3. Cookies'),
       p(
-        'Este site pode utilizar cookies para fins de análise de tráfego e desempenho. Você pode desativá-los a qualquer momento nas configurações do seu navegador, sem prejuízo ao acesso ao conteúdo.',
+        'Este site usa cookies do Google Analytics (_ga e _ga_*) para medir o tráfego e entender como o site é usado. Eles só são ativados com o seu consentimento (art. 7º, I, da LGPD), pedido no aviso exibido na primeira visita. Você pode aceitar, recusar ou retirar o consentimento a qualquer momento em "Preferências de cookies", no rodapé; ao recusar, os cookies de análise são apagados. Recusar não limita o acesso ao conteúdo, e a sua escolha fica salva apenas no seu navegador.',
       ),
       h2('4. Serviços de terceiros'),
       p('Alguns serviços externos podem tratar dados conforme suas próprias políticas:'),
       ul(
         ['WhatsApp (Meta): canal de contato;'],
-        ['[Ferramenta de análise, ex.: Google Analytics ou Vercel Analytics]: métricas de acesso;'],
-        ['[Provedor de hospedagem, ex.: Vercel]: hospedagem do site;'],
+        ['Google Analytics (Google): métricas de acesso, apenas com o seu consentimento;'],
+        ['Vercel: hospedagem do site;'],
         [
           'Redes sociais: os links para Dribbble, GitHub, LinkedIn e Instagram direcionam para plataformas externas.',
         ],

@@ -3,11 +3,13 @@ import type { Metadata } from 'next'
 import { populated } from '@/components/layout/projects/Projects'
 import Stack from '@/components/layout/stack/Stack'
 import Stats from '@/components/layout/stats/Stats'
+import JsonLd from '@/components/seo/JsonLd'
 import { type Locale } from '@/i18n/config'
 import { routePath } from '@/i18n/routes'
 import { hireLink, resolveLink, type ResolvedLink } from '@/lib/links'
 import { getPage, getSettings } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
+import { servicesGraph } from '@/lib/structured-data'
 
 import About from './_components/About'
 import Beliefs from './_components/Beliefs'
@@ -39,8 +41,11 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   const [page, settings] = await Promise.all([getPage('home-page', locale), getSettings(locale)])
   const hire = hireLink(settings)
 
+  const services = servicesGraph(page.services)
+
   return (
     <>
+      {services && <JsonLd data={services} />}
       <Hero
         {...page.hero}
         cta={{ label: page.hero?.ctaLabel, title: page.hero?.ctaTitle, href: hire.href, blank: hire.blank }}

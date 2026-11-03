@@ -17,10 +17,11 @@ const convertersFor =
     ...defaultConverters,
     ...LinkJSXConverter({
       internalDocToHref: ({ linkNode }: { linkNode: SerializedLinkNode }) => {
-        const { value, relationTo } = linkNode.fields.doc!
-        if (typeof value !== 'object') throw new Error('Expected the linked document to be populated')
+        const { value, relationTo } = linkNode.fields.doc ?? {}
+        // A link to a page that is unpublished or was deleted arrives as a bare id: keep the text
+        const slug = value && typeof value === 'object' ? (value.slug as string | undefined) : undefined
+        if (!slug) return '#'
 
-        const slug = value.slug as string
         return relationTo === 'projects' ? projectPath(locale, slug) : pagePath(locale, slug)
       },
     }),

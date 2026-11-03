@@ -42,6 +42,12 @@ if (!isLocalDatabase(process.env.DATABASE_URL) && !process.env.BLOB_READ_WRITE_T
   )
 }
 
+// This site, plus the deploy's own URL on Vercel (previews have a different host)
+const trustedOrigins = [
+  getServerSideURL(),
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+].filter(Boolean)
+
 export default buildConfig({
   admin: {
     components: {
@@ -92,7 +98,11 @@ export default buildConfig({
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
   collections: [Pages, Projects, Media, Users],
-  cors: [getServerSideURL()].filter(Boolean),
+  cors: trustedOrigins,
+  // The admin's auth cookie is only accepted from these origins
+  csrf: trustedOrigins,
+  // Nothing uses GraphQL; the REST API and the Local API cover the admin and the site
+  graphQL: { disable: true },
   globals: [HomePage, AboutPage, ProjectsPage, UsesPage, Settings, Header, Footer],
   // Admin interface language
   i18n: {

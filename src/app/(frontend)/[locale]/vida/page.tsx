@@ -8,7 +8,9 @@ import type { Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { routePath } from '@/i18n/routes'
 import { getPage } from '@/lib/payload'
+import JsonLd from '@/components/seo/JsonLd'
 import { buildMetadata, plainTitle } from '@/lib/seo'
+import { breadcrumbs } from '@/lib/structured-data'
 
 import Categories from './_components/Categories'
 
@@ -31,6 +33,12 @@ export default async function Uses({ params }: PageProps<'/[locale]/vida'>) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbs([
+          { name: 'Home', path: routePath(locale, 'home') },
+          { name: plainTitle(page.subtitle) || getDictionary(locale).pages.uses, path: routePath(locale, 'uses') },
+        ])}
+      />
       <section className="pt-30 pb-20 max-sm:pt-12 max-sm:pb-10">
         <Container>
           <Reveal className="flex items-start justify-between gap-10 max-sm:flex-col">

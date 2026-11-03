@@ -48,7 +48,23 @@ const nextConfig: NextConfig = {
     return webpackConfig
   },
   reactStrictMode: true,
+  poweredByHeader: false,
   redirects,
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          // Only this site may frame its pages (the admin's live preview does)
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
+        ],
+      },
+    ]
+  },
   turbopack: {
     root: path.resolve(dirname),
   },

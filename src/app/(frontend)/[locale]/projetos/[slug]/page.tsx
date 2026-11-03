@@ -13,7 +13,9 @@ import { getDictionary } from '@/i18n/dictionaries'
 import { projectPath, routePath } from '@/i18n/routes'
 import { hireLink } from '@/lib/links'
 import { getProjectBySlug, getProjects, getPublishedSlugs, getSettings } from '@/lib/payload'
+import JsonLd from '@/components/seo/JsonLd'
 import { buildMetadata } from '@/lib/seo'
+import { breadcrumbs, projectGraph } from '@/lib/structured-data'
 
 import Banner from './_components/Banner'
 import Specs from './_components/Specs'
@@ -42,6 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     fallbackTitle: project.client ? `${project.title} — ${project.client}` : project.title,
     fallbackDescription: project.summary,
     fallbackImage: project.cover ?? project.thumbnail,
+    type: 'article',
+    modifiedTime: project.updatedAt,
   })
 }
 
@@ -56,8 +60,20 @@ export default async function ProjectPage({ params }: Props) {
     getProjects(locale, { exclude: project.id, limit: 2 }),
   ])
 
+  const path = projectPath(locale, project.slug)
+
   return (
     <>
+      <JsonLd
+        data={[
+          projectGraph(project, { locale, path }),
+          breadcrumbs([
+            { name: 'Home', path: routePath(locale, 'home') },
+            { name: getDictionary(locale).pages.projects, path: routePath(locale, 'projects') },
+            { name: project.title, path },
+          ]),
+        ]}
+      />
       <Banner
         client={project.client}
         title={project.title}
@@ -76,7 +92,7 @@ export default async function ProjectPage({ params }: Props) {
               <Media
                 resource={project.cover}
                 sizes="(max-width: 1024px) 100vw, 1360px"
-                priority
+                preload
                 className="h-auto w-full rounded-lg"
               />
             </Reveal>

@@ -6,6 +6,7 @@ type Props = {
   href?: string | null
   blank?: boolean
   submit?: boolean
+  onClick?: () => void
   full?: boolean
   color?: 'light' | 'dark'
   className?: string
@@ -21,6 +22,7 @@ export default function Button({
   href,
   blank,
   submit,
+  onClick,
   full,
   color = 'light',
   className,
@@ -47,7 +49,7 @@ export default function Button({
   }
 
   return (
-    <button type={submit ? 'submit' : 'button'} className={classes}>
+    <button type={submit ? 'submit' : 'button'} onClick={onClick} className={classes}>
       {children}
     </button>
   )

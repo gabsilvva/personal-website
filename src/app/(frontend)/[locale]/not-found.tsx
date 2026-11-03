@@ -1,23 +1,26 @@
-import { headers } from 'next/headers'
+'use client'
+
+import { usePathname } from 'next/navigation'
 
 import Button from '@/components/interface/button/Button'
 import Container from '@/components/layout/container/Container'
-import { defaultLocale, isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
-import { routePath } from '@/i18n/routes'
-import Image from 'next/image'
+import { parsePath, routePath } from '@/i18n/routes'
 
-export default async function NotFound() {
-  const header = (await headers()).get('x-locale') ?? ''
-  const locale = isLocale(header) ? header : defaultLocale
+/**
+ * A not-found page gets no params, so the language comes from the URL. Reading it on the client
+ * (instead of a request header) keeps every page of the site static.
+ */
+export default function NotFound() {
+  const { locale } = parsePath(usePathname() ?? '/')
   const t = getDictionary(locale).notFound
 
   return (
-    <section className="py-between max-sm:py-between-mob relative">
+    <section className="relative py-between max-sm:py-between-mob">
       <Container>
         <div className="flex flex-col items-center text-center">
           <h1 className="text-[96px] max-sm:text-[64px]">404</h1>
-          <h4 className="mt-10 max-sm:mt-6">{t.title}</h4>
+          <h2 className="mt-10 text-[40px] max-sm:mt-6 max-sm:text-[28px]">{t.title}</h2>
           <p className="mt-6 text-gray">{t.text}</p>
           <Button href={routePath(locale, 'home')} className="mt-12">
             {t.button}

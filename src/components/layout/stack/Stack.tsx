@@ -72,7 +72,7 @@ export default function Stack({ subtitle = 'Stack', groups, joined }: Props) {
               )}
             >
               <div className="border-b border-light-black pt-20 max-sm:hidden">
-                <h4 className="inline-block border-b-2 border-gray pb-8 text-[40px]">{group.title}</h4>
+                <h3 className="inline-block border-b-2 border-gray pb-8 text-[40px]">{group.title}</h3>
               </div>
               <ul className="flex flex-col gap-6 pt-10 pr-10 max-sm:gap-5 max-sm:pt-8 max-sm:pr-0">
                 {group.items?.map((item) => (

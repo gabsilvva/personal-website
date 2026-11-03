@@ -99,4 +99,13 @@
   html:not([data-loaded]) body {
     overflow: hidden;
   }
+
+  /* Content that slides in is simply there for visitors who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 }

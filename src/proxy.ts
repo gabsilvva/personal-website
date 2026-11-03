@@ -3,12 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { LOCALE_COOKIE } from '@/i18n/config'
 import { alternatePath, englishToFolder, folderToEnglish } from '@/i18n/routes'
 
-// Lets pages without route params (not-found) know the locale
-const rewrite = (request: NextRequest, url: URL, locale: string) => {
-  const headers = new Headers(request.headers)
-  headers.set('x-locale', locale)
-  return NextResponse.rewrite(url, { request: { headers } })
-}
+const rewrite = (url: URL) => NextResponse.rewrite(url)
 
 const BOT = /bot|crawl|spider|slurp|preview|lighthouse/i
 
@@ -53,7 +48,7 @@ export function proxy(request: NextRequest) {
 
     const folder = first ? (englishToFolder[first] ?? first) : undefined
     url.pathname = `/en${folder ? `/${[folder, ...rest].join('/')}` : ''}`
-    return rewrite(request, url, 'en')
+    return rewrite(url)
   }
 
   // First visit from an English browser: suggest the English site (never for crawlers,
@@ -66,7 +61,7 @@ export function proxy(request: NextRequest) {
   }
 
   url.pathname = `/pt${pathname === '/' ? '' : pathname}`
-  return rewrite(request, url, 'pt')
+  return rewrite(url)
 }
 
 export const config = {

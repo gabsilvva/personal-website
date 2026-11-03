@@ -1,10 +1,11 @@
 import '@/styles/globals.css'
 
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
+import Analytics from '@/components/layout/consent/Analytics'
 import Footer from '@/components/layout/footer/Footer'
 import Nav from '@/components/layout/nav/Nav'
 import Search from '@/components/layout/search/Search'
@@ -17,7 +18,8 @@ import { routePath } from '@/i18n/routes'
 import { hireLink, resolveLink } from '@/lib/links'
 import { getFooter, getHeader, getPage, getSettings } from '@/lib/payload'
 import { getSearchIndex } from '@/lib/search'
-import { SITE_NAME, SITE_URL } from '@/lib/site'
+import { analyticsId, SITE_NAME, SITE_URL } from '@/lib/site'
+import { siteGraph } from '@/lib/structured-data'
 
 const serif = Fraunces({
   subsets: ['latin'],
@@ -31,15 +33,36 @@ const sans = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
 })
 
+// Preview deploys must never be indexed (they duplicate the production content)
+const indexable = process.env.VERCEL_ENV !== 'preview'
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
     template: `%s — ${SITE_NAME}`,
   },
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  // iOS would turn the CNPJ and numbers into phone links
+  formatDetection: { telephone: false, address: false, email: false },
+  robots: indexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+      }
+    : { index: false, follow: false },
   icons: {
-    icon: [{ url: '/favicon.ico', type: 'image/svg+xml' }],
+    icon: [{ url: '/favicon.ico', sizes: 'any' }],
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  colorScheme: 'dark',
 }
 
 export function generateStaticParams() {
@@ -73,29 +96,11 @@ export default async function Layout({ children, params }: LayoutProps<'/[locale
     return link && label ? [{ label, ...link }] : []
   })
 
-  // Who owns the site, for search engines: name, role, contact and public profiles
-  const structuredData = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: settings.seo?.title || SITE_NAME,
-      url: SITE_URL,
-      inLanguage: htmlLang[locale],
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: SITE_NAME,
-      url: SITE_URL,
-      email: `mailto:${settings.email}`,
-      jobTitle: home.hero?.rolesRight?.split(/\r?\n/).filter(Boolean).join(' & ') || undefined,
-      description: settings.seo?.description || undefined,
-      // Only real profile URLs (with a path), not placeholders like https://github.com/
-      sameAs: (settings.socials ?? [])
-        .map((social) => social.url)
-        .filter((url) => /^https?:\/\/[^/]+\/.+/.test(url)),
-    },
-  ]
+  const gaId = analyticsId
+  const privacyHref = (legalLinks.find((link) => /privac/i.test(link.href)) ?? legalLinks[0])?.href
+
+  // Who owns the site, for search and AI answer engines: name, role, skills, contact and profiles
+  const structuredData = siteGraph({ locale, settings, home })
 
   const footerSocials = (settings.socials ?? [])
     .filter((social) => social.showInFooter)
@@ -112,7 +117,7 @@ export default async function Layout({ children, params }: LayoutProps<'/[locale
       <head>
         <script dangerouslySetInnerHTML={{ __html: loadscreenScript }} />
         <noscript>
-          <style>{'#loadscreen{display:none}body{overflow:auto!important}'}</style>
+          <style>{'#loadscreen{display:none}body{overflow:auto!important}[data-reveal]{opacity:1!important;transform:none!important}'}</style>
         </noscript>
       </head>
       <body id="top">
@@ -137,8 +142,11 @@ export default async function Layout({ children, params }: LayoutProps<'/[locale
           socials={footerSocials}
           legalText={footer.legalText}
           legalLinks={legalLinks}
+          cookies={!!gaId}
           t={t.footer}
         />
+
+        <Analytics gaId={gaId} privacyHref={privacyHref} t={t.consent} />
       </body>
     </html>
   )

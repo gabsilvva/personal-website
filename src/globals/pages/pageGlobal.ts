@@ -2,11 +2,13 @@ import type { GlobalAfterChangeHook, GlobalConfig, Tab } from 'payload'
 
 import { revalidatePath } from 'next/cache'
 
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { localizeTabs } from '@/fields/localize'
 import { seoTab } from '@/fields/seoTab'
 import { isLocale } from '@/i18n/config'
 import { routePath, routes, type RouteKey } from '@/i18n/routes'
 import { previewUrl } from '@/utilities/generatePreviewPath'
+import { revalidateDiscovery } from '@/hooks/revalidateDiscovery'
 
 type Options = {
   slug: string
@@ -35,6 +37,9 @@ export const pageGlobal = ({ slug, label, route, tabs }: Options): GlobalConfig 
     if (!context.disableRevalidate) {
       payload.logger.info(`Revalidating page: ${pattern}`)
       revalidatePath(pattern, 'page')
+      // The uses page also feeds the search of every page
+      if (route === 'uses') revalidatePath('/[locale]', 'layout')
+      revalidateDiscovery()
     }
 
     return doc
@@ -44,7 +49,8 @@ export const pageGlobal = ({ slug, label, route, tabs }: Options): GlobalConfig 
     slug,
     label,
     access: {
-      read: () => true,
+      // Visitors only get the published version, never the drafts and autosaves
+      read: authenticatedOrPublished,
     },
     admin: {
       group: 'Páginas',

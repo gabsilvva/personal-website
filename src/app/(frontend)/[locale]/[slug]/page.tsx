@@ -7,9 +7,11 @@ import Subtitle from '@/components/interface/subtitle/Subtitle'
 import Container from '@/components/layout/container/Container'
 import { intlLocale, locales, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
-import { pagePath } from '@/i18n/routes'
+import { pagePath, routePath } from '@/i18n/routes'
 import { findPageBySlugInAnyLocale, getPageBySlug, getPageSlug, getPublishedSlugs } from '@/lib/payload'
+import JsonLd from '@/components/seo/JsonLd'
 import { buildMetadata, richTextExcerpt } from '@/lib/seo'
+import { breadcrumbs } from '@/lib/structured-data'
 
 type Props = PageProps<'/[locale]/[slug]'>
 
@@ -62,6 +64,12 @@ export default async function TextPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbs([
+          { name: 'Home', path: routePath(locale, 'home') },
+          { name: page.title, path: pagePath(locale, page.slug) },
+        ])}
+      />
       <section className="border-b border-light-black pt-30 pb-20 max-sm:pt-12 max-sm:pb-10">
         <Container>
           <Reveal>

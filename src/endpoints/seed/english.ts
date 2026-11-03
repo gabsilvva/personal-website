@@ -442,7 +442,7 @@ export const translateToEnglish = async ({
       p('This website has no forms or sign-up area. The only data processed is:'),
       ul(
         [
-          'Browsing data: anonymous information such as pages visited, time on page, device type, browser and approximate location, collected by analytics tools.',
+          'Browsing data: information such as pages visited, time on page, device type, browser and approximate location, collected by Google Analytics only if you accept analytics cookies.',
         ],
         [
           'Contact data: when you click the WhatsApp button, the conversation happens outside this website. The name, number and messages you send are used only to reply to you and work on a possible proposal.',
@@ -458,14 +458,14 @@ export const translateToEnglish = async ({
       p('I do not sell, rent or share your data with third parties for marketing purposes.'),
       h2('3. Cookies'),
       p(
-        'This website may use cookies for traffic and performance analysis. You can disable them at any time in your browser settings without losing access to the content.',
+        'This website uses Google Analytics cookies (_ga and _ga_*) to measure traffic and understand how the site is used. They are only turned on with your consent (LGPD, art. 7, I), asked for in the notice shown on your first visit. You can accept, decline or withdraw consent at any time in "Cookie preferences", in the footer; declining deletes the analytics cookies. Declining does not limit access to the content, and your choice is stored only in your browser.',
       ),
       h2('4. Third-party services'),
       p('Some external services may process data according to their own policies:'),
       ul(
         ['WhatsApp (Meta): contact channel;'],
-        ['[Analytics tool, e.g. Google Analytics or Vercel Analytics]: traffic metrics;'],
-        ['[Hosting provider, e.g. Vercel]: website hosting;'],
+        ['Google Analytics (Google): traffic metrics, only with your consent;'],
+        ['Vercel: website hosting;'],
         [
           'Social networks: the links to Dribbble, GitHub, LinkedIn and Instagram lead to external platforms.',
         ],

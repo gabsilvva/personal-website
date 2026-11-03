@@ -25,8 +25,8 @@ const BeforeDashboard: React.FC = () => {
           </li>
         )}
         <li>
-          O conteúdo de cada página fica em <strong>Páginas</strong>, conforme o template escolhido. Contato,
-          redes sociais, números e stack ficam em <strong>Configurações</strong>.
+          Home, Sobre, Projetos, Vida e os textos legais ficam em <strong>Páginas</strong>; os projetos, em{' '}
+          <strong>Conteúdo</strong>. Contato, redes sociais, números e stack ficam em <strong>Configurações</strong>.
         </li>
       </ul>
     </div>

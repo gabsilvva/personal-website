@@ -2,10 +2,15 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'paylo
 
 import { revalidatePath } from 'next/cache'
 
+import { revalidateDiscovery } from '@/hooks/revalidateDiscovery'
 import type { Page } from '../../../payload-types'
 
 // Text pages render at /[locale]/[slug]; the pattern covers every locale and slug
-const revalidateTextPages = () => revalidatePath('/[locale]/[slug]', 'page')
+const revalidateTextPages = () => {
+  // Every page: the search, built in the layout, lists the text pages
+  revalidatePath('/[locale]', 'layout')
+  revalidateDiscovery()
+}
 
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,

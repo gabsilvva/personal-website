@@ -39,7 +39,7 @@ export default function Hero({
           <Media
             resource={image}
             fill
-            priority
+            preload
             sizes="(max-width: 1024px) 100vw, 428px"
             className="object-cover object-top grayscale"
           />
@@ -90,6 +90,7 @@ export default function Hero({
           <Link
             href={cta.href}
             target={cta.blank ? '_blank' : undefined}
+            rel={cta.blank ? 'noopener noreferrer' : undefined}
             className="flex h-42 w-[440px] flex-col justify-center gap-6 rounded-lg bg-white px-12 transition-colors hover:bg-light-gray max-sm:h-28 max-sm:w-full max-sm:gap-4 max-sm:px-6"
           >
             {cta.label && (

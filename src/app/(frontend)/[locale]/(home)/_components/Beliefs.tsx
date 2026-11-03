@@ -36,7 +36,7 @@ export default function Beliefs({ title, items, hire }: Props) {
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <div>
-                        <h5 className="max-sm:text-2xl">{item.title}</h5>
+                        <h3 className="text-h5 max-sm:text-2xl">{item.title}</h3>
                         {item.text && <p className="mt-8 max-w-[400px] max-sm:mt-3">{item.text}</p>}
                       </div>
                     </div>

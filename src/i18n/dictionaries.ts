@@ -49,6 +49,20 @@ const pt = {
   footer: {
     backToTop: 'Voltar ao topo',
     and: ' e ',
+    cookies: 'Preferências de cookies',
+  },
+  consent: {
+    label: 'Aviso de cookies',
+    text: 'Uso cookies do Google Analytics para entender como o site é usado. Eles só são ativados se você aceitar, e você pode mudar de ideia quando quiser.',
+    policy: 'Política de Privacidade',
+    accept: 'Aceitar',
+    reject: 'Recusar',
+  },
+  error: {
+    title: 'Algo deu errado',
+    text: 'Não foi possível carregar esta página agora. Tente de novo em instantes.',
+    retry: 'Tentar de novo',
+    home: 'Voltar para a home',
   },
   notFound: {
     title: 'Parece que você se perdeu',
@@ -128,6 +142,20 @@ const en: Dictionary = {
   footer: {
     backToTop: 'Back to top',
     and: ' and ',
+    cookies: 'Cookie preferences',
+  },
+  consent: {
+    label: 'Cookie notice',
+    text: 'I use Google Analytics cookies to understand how the site is used. They are only turned on if you accept, and you can change your mind at any time.',
+    policy: 'Privacy Policy',
+    accept: 'Accept',
+    reject: 'Decline',
+  },
+  error: {
+    title: 'Something went wrong',
+    text: 'This page could not be loaded right now. Please try again in a moment.',
+    retry: 'Try again',
+    home: 'Back to home',
   },
   notFound: {
     title: 'Looks like you got lost',

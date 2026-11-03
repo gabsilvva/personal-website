@@ -29,9 +29,9 @@ export default function Cta({ title, image, hire }: Props) {
           {/* Long statement: a notch smaller than h1 on small screens so it keeps 5–6 lines.
               The optical size stays at the design's 96px: Fraunces widens its glyphs at smaller
               sizes, which would break the composition. */}
-          <h1 className="relative sm:text-[min(6rem,7.059cqw)] sm:[font-variation-settings:'opsz'_96,var(--fraunces-axes)] max-sm:text-[clamp(2.25rem,10vw,3.5rem)]">
+          <h2 className="text-h1 relative sm:text-[min(6rem,7.059cqw)] sm:[font-variation-settings:'opsz'_96,var(--fraunces-axes)] max-sm:text-[clamp(2.25rem,10vw,3.5rem)]">
             <Highlight text={title} />
-          </h1>
+          </h2>
           <Button href={hire.href} blank={hire.blank} className="mt-20 max-sm:mt-10 max-sm:w-full">
             {hire.label}
           </Button>

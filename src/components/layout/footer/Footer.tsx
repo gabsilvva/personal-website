@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import Button from '@/components/interface/button/Button'
 import Flat from '@/components/interface/button/Flat'
 import Subtitle from '@/components/interface/subtitle/Subtitle'
+import ConsentButton from '@/components/layout/consent/ConsentButton'
 import Container from '@/components/layout/container/Container'
 import type { Dictionary } from '@/i18n/dictionaries'
 import type { HireLink } from '@/lib/links'
@@ -21,10 +22,12 @@ type Props = {
   socials: Array<{ label: string; url: string }>
   legalText?: string | null
   legalLinks: Array<{ label: string; href: string; blank: boolean }>
+  /** Shows "Preferências de cookies" when the site uses analytics cookies. */
+  cookies?: boolean
   t: Dictionary['footer']
 }
 
-export default function Footer({ contact, home, hire, socials, legalText, legalLinks, t }: Props) {
+export default function Footer({ contact, home, hire, socials, legalText, legalLinks, cookies, t }: Props) {
   const year = new Date().getFullYear().toString()
 
   return (
@@ -79,7 +82,7 @@ export default function Footer({ contact, home, hire, socials, legalText, legalL
                 {/* Labels never wrap, so "X (Twitter)" stays on one line */}
                 {socials.map((social) => (
                   <li key={social.url}>
-                    <Flat href={social.url} blank className="whitespace-nowrap">
+                    <Flat href={social.url} blank={/^https?:\/\//.test(social.url)} className="whitespace-nowrap">
                       {social.label}
                     </Flat>
                   </li>
@@ -111,6 +114,11 @@ export default function Footer({ contact, home, hire, socials, legalText, legalL
                     </Link>
                   </Fragment>
                 ))}
+              </p>
+            )}
+            {cookies && (
+              <p className="text-sm text-gray">
+                <ConsentButton>{t.cookies}</ConsentButton>
               </p>
             )}
           </div>

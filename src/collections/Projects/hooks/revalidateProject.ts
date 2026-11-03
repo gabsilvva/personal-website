@@ -1,6 +1,7 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { revalidatePath } from 'next/cache'
 
+import { revalidateDiscovery } from '@/hooks/revalidateDiscovery'
 import type { Project } from '../../../payload-types'
 
 // Projects show up on the home, the listing and other projects' "explore more", in every locale.
@@ -8,7 +9,9 @@ import type { Project } from '../../../payload-types'
 const revalidateProjects = () => {
   revalidatePath('/[locale]/projetos/[slug]', 'page')
   revalidatePath('/[locale]/projetos', 'page')
-  revalidatePath('/[locale]', 'page')
+  // Every page: the search, built in the layout, lists the projects
+  revalidatePath('/[locale]', 'layout')
+  revalidateDiscovery()
 }
 
 export const revalidateProject: CollectionAfterChangeHook<Project> = ({

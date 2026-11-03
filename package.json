@@ -1,7 +1,7 @@
 {
   "name": "personal-website",
   "version": "1.0.0",
-  "description": "Website template for Payload",
+  "description": "Portfolio of Gabriel da Silva (gabsilva.dev), built with Payload CMS and Next.js",
   "license": "MIT",
   "type": "module",
   "scripts": {

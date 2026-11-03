@@ -43,7 +43,7 @@ export default function Project({ project, locale }: Props) {
       </figure>
       <div className="mt-8 border-l border-light-black py-8 pl-8 max-sm:mt-5 max-sm:py-1 max-sm:pl-5">
         <div className="flex flex-wrap items-end gap-x-4 gap-y-1">
-          <h5 className="text-[32px] max-sm:text-2xl">{project.title}</h5>
+          <h3 className="text-[32px] max-sm:text-2xl">{project.title}</h3>
           {project.year && <span className="text-sm leading-[1.6] font-light text-gray">{project.year}</span>}
         </div>
         <TechList items={project.technologies} className="mt-4" />

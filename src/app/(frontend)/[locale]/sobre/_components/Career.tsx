@@ -39,9 +39,9 @@ export default function Career({ title, text, experiences, locale }: Props) {
         <Reveal className="flex items-start justify-between gap-10 max-sm:flex-col-reverse">
           {text && <p className="max-w-[380px] text-white">{text}</p>}
           {title && (
-            <h1 className="text-right max-sm:text-left">
+            <h2 className="text-h1 text-right max-sm:text-left">
               <Highlight text={title} />
-            </h1>
+            </h2>
           )}
         </Reveal>
 
@@ -59,7 +59,7 @@ export default function Career({ title, text, experiences, locale }: Props) {
                     <div>
                       {experience.type && <Subtitle>{types[experience.type]}</Subtitle>}
                       <div className="mt-8 flex flex-wrap items-end gap-4">
-                        <h5>{experience.company}</h5>
+                        <h3 className="text-h5">{experience.company}</h3>
                         {experience.period && (
                           <span className="text-sm leading-none font-light text-gray">{experience.period}</span>
                         )}

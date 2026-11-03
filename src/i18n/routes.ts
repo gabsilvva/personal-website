@@ -64,3 +64,6 @@ export const alternatePath = (pathname: string, target: Locale) => {
 
   return withLocale(target, `/${[segment, ...rest].filter(Boolean).join('/')}`)
 }
+
+/** RSS feed of the projects. Served by `[locale]/feed.xml`; the Portuguese one is rewritten to the root. */
+export const feedPath = (locale: Locale) => withLocale(locale, '/feed.xml')

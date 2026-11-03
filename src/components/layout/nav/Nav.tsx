@@ -86,7 +86,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
           <div className="flex h-full items-center justify-between">
             <div className="flex h-full items-center">
               <Link href={routePath(locale, 'home')} aria-label={t.home} className="shrink-0">
-                <Image src="/svg/logo.svg" alt="GAB.S" width={92} height={24} priority />
+                <Image src="/svg/logo.svg" alt="GAB.S" width={92} height={24}/>
               </Link>
 
               <span className="mx-16 h-8 w-px bg-light-black max-sm:hidden" />
@@ -181,7 +181,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
               {item.soon || !item.href ? (
                 <span className="font-display flex items-center gap-3 py-5 text-[40px] leading-none text-gray">
                   {item.label}
-                  <Tag variant="mini">SOON</Tag>
+                  {item.soon && <Tag variant="mini">SOON</Tag>}
                 </span>
               ) : (
                 <Link

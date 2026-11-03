@@ -97,9 +97,9 @@ export default function Process({ title, steps, hire }: Props) {
         <Container>
           {/* While pinned, the title and gaps shrink with the window height so everything fits */}
           {title && (
-            <h1 className="text-center pin:text-[min(6rem,10vh)]">
+            <h2 className="text-h1 text-center pin:text-[min(6rem,10vh)]">
               <Highlight text={title} />
-            </h1>
+            </h2>
           )}
 
           {/* Desktop: carousel */}
@@ -162,7 +162,7 @@ export default function Process({ title, steps, hire }: Props) {
                   {number(index)}
                 </span>
                 <div className="pt-3">
-                  <h6 className="text-2xl">{step.title}</h6>
+                  <h3 className="text-2xl">{step.title}</h3>
                   {step.text && <p className="mt-3">{step.text}</p>}
                 </div>
               </li>

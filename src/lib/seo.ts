@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { htmlLang, type Locale } from '@/i18n/config'
+import { feedPath } from '@/i18n/routes'
 import type { Media } from '@/payload-types'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { getSettings } from './payload'
@@ -24,6 +25,10 @@ type Options = {
   fallbackDescription?: string | null
   /** Used when the SEO tab has no image, before the site default. */
   fallbackImage?: number | Media | null
+  /** Open Graph type: a project is an article, the About page a profile. */
+  type?: 'website' | 'article' | 'profile'
+  /** Last change, for `article:modified_time`. */
+  modifiedTime?: string | null
 }
 
 const asDescription = (value?: string | null) => {
@@ -84,9 +89,18 @@ export async function buildMetadata(meta: Meta | null | undefined, options: Opti
     // Leaving `title` out keeps the layout default; it must never be `undefined` explicitly
     ...(absolute ? { title: { absolute } } : options.fallbackTitle ? { title: options.fallbackTitle } : {}),
     description,
-    alternates: { canonical, languages },
+    alternates: {
+      canonical,
+      languages,
+      // The projects feed in the page's language
+      types: { 'application/rss+xml': [{ url: absoluteUrl(feedPath(options.locale)), title: `${SITE_NAME} — RSS` }] },
+    },
     openGraph: {
-      type: 'website',
+      ...(options.type === 'article'
+        ? { type: 'article', modifiedTime: options.modifiedTime ?? undefined, authors: [SITE_URL] }
+        : options.type === 'profile'
+          ? { type: 'profile', firstName: SITE_NAME.split(' ')[0], lastName: SITE_NAME.split(' ').slice(1).join(' ') }
+          : { type: 'website' }),
       siteName: SITE_NAME,
       locale: htmlLang[options.locale].replace('-', '_'),
       title: fullTitle,
