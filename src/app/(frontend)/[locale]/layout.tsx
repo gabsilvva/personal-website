@@ -55,8 +55,13 @@ export const metadata: Metadata = {
         googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
       }
     : { index: false, follow: false },
+  // Generated from public/svg/icon-gs.svg
   icons: {
-    icon: [{ url: '/favicon.ico', sizes: 'any' }],
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
   },
 }
 

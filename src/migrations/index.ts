@@ -2,6 +2,7 @@ import * as migration_20261102_144836_initial from './20261102_144836_initial';
 import * as migration_20261102_234521_media_storage_prefix from './20261102_234521_media_storage_prefix';
 import * as migration_20261103_194507_links_life_no_blog from './20261103_194507_links_life_no_blog';
 import * as migration_20261103_214405_media_alt_no_schedule from './20261103_214405_media_alt_no_schedule';
+import * as migration_20261103_220845_remove_redirects from './20261103_220845_remove_redirects';
 
 export const migrations = [
   {
@@ -22,6 +23,11 @@ export const migrations = [
   {
     up: migration_20261103_214405_media_alt_no_schedule.up,
     down: migration_20261103_214405_media_alt_no_schedule.down,
-    name: '20261103_214405_media_alt_no_schedule'
+    name: '20261103_214405_media_alt_no_schedule',
+  },
+  {
+    up: migration_20261103_220845_remove_redirects.up,
+    down: migration_20261103_220845_remove_redirects.down,
+    name: '20261103_220845_remove_redirects'
   },
 ];
