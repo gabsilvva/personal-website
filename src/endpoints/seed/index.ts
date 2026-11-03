@@ -12,7 +12,9 @@ const asset = (file: string) => path.resolve(dirname, 'assets', file)
 // The page globals are simply overwritten below
 const collections: CollectionSlug[] = ['pages', 'projects', 'media']
 
-// Skips the Next.js revalidation hooks while seeding
+// Skips the Next.js revalidation hooks while seeding. Always pass a copy (`{ ...context }`):
+// the Local API uses the object as req.context, and the cloud-storage plugin sets
+// `skipCloudStorage` on it after an upload, which would skip uploads for every later file.
 const context = { disableRevalidate: true }
 
 /**
@@ -68,7 +70,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
         data: { alt },
         filePath: asset(file),
         req,
-        context,
+        context: { ...context },
       }),
     )
   }
@@ -170,7 +172,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
           _status: 'published',
         },
         req,
-        context,
+        context: { ...context },
       }),
     )
   }
@@ -182,7 +184,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       collection: 'pages',
       data: { ...data, _status: 'published' } as never,
       req,
-      context,
+      context: { ...context },
     })
 
   const privacy = await createPage({
@@ -307,7 +309,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       slug,
       data: { ...data, _status: 'published' } as never,
       req,
-      context,
+      context: { ...context },
     })
 
   await updatePage('projects-page', {
@@ -733,7 +735,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       ],
     },
     req,
-    context,
+    context: { ...context },
   })
 
   await payload.updateGlobal({
@@ -747,7 +749,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       ],
     },
     req,
-    context,
+    context: { ...context },
   })
 
   await payload.updateGlobal({
@@ -758,7 +760,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       legalLinks: [privacy.id, terms.id],
     },
     req,
-    context,
+    context: { ...context },
   })
 
   payload.logger.info('— Translating to English...')
