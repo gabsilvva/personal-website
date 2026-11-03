@@ -12,7 +12,7 @@ type Props = {
   title?: string | null
   text?: string | null
   projects: ProjectCardData[]
-  button: { label?: string | null; href: string }
+  button?: { label?: string | null; href: string; blank?: boolean } | null
   locale: Locale
 }
 
@@ -34,9 +34,11 @@ export default function FeaturedProjects({ subtitle, title, text, projects, butt
 
         <Projects projects={projects} locale={locale} className="mt-20 max-sm:mt-10" />
 
-        {button.label && (
+        {button?.label && (
           <div className="mt-20 flex justify-center max-sm:mt-10">
-            <Flat href={button.href}>{button.label}</Flat>
+            <Flat href={button.href} blank={button.blank}>
+              {button.label}
+            </Flat>
           </div>
         )}
       </Container>

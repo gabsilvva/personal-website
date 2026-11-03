@@ -4,13 +4,13 @@ import { pageGlobal } from './pageGlobal'
 
 export const UsesPage = pageGlobal({
   slug: 'uses-page',
-  label: 'Equipamentos',
+  label: 'Vida',
   route: 'uses',
   tabs: [
     {
       label: 'Conteúdo',
       fields: [
-        { name: 'subtitle', label: 'Subtítulo', type: 'text', defaultValue: 'Equipamentos' },
+        { name: 'subtitle', label: 'Subtítulo', type: 'text', defaultValue: 'Vida' },
         highlightText('title', 'Título'),
         {
           name: 'categories',

@@ -117,8 +117,10 @@ export default function Services({ items, locale }: Props) {
                     onClick={() => setActive(open ? null : index)}
                     className={cn(
                       'group col-start-1 row-start-1 flex w-full items-center gap-10 py-12 text-left max-sm:gap-4 max-sm:py-6',
-                      // A closed service shows no case, so its tagline can reach into that column
-                      !open && 'sm:col-span-2',
+                      // A closed service shows no case, so its tagline can reach into that column.
+                      // col-end, not col-span: span would drop col-start-1 and push the button
+                      // past the case column into new columns.
+                      !open && 'sm:col-end-3',
                     )}
                   >
                     <span className="font-display w-8 shrink-0 text-2xl leading-none text-gray max-sm:hidden">

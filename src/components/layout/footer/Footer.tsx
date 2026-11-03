@@ -20,7 +20,7 @@ type Props = {
   hire: HireLink
   socials: Array<{ label: string; url: string }>
   legalText?: string | null
-  legalLinks: Array<{ label: string; href: string }>
+  legalLinks: Array<{ label: string; href: string; blank: boolean }>
   t: Dictionary['footer']
 }
 
@@ -101,7 +101,12 @@ export default function Footer({ contact, home, hire, socials, legalText, legalL
                 {legalLinks.map((link, index) => (
                   <Fragment key={link.href}>
                     {index > 0 && (index === legalLinks.length - 1 ? t.and : ', ')}
-                    <Link href={link.href} className="font-normal text-white underline hover:opacity-70">
+                    <Link
+                      href={link.href}
+                      target={link.blank ? '_blank' : undefined}
+                      rel={link.blank ? 'noopener noreferrer' : undefined}
+                      className="font-normal text-white underline hover:opacity-70"
+                    >
                       {link.label}
                     </Link>
                   </Fragment>

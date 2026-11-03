@@ -1,5 +1,6 @@
 import { highlightText } from '@/fields/highlightText'
 import { cryptoCoins, serviceIcons } from '@/fields/icons'
+import { linkGroup } from '@/fields/link'
 import { pageGlobal } from './pageGlobal'
 
 export const HomePage = pageGlobal({
@@ -89,6 +90,7 @@ export const HomePage = pageGlobal({
           relationTo: 'projects',
           hasMany: true,
         },
+        linkGroup('button', 'Destino do link', { defaultPage: 'projects' }),
       ],
     },
     {
@@ -135,10 +137,10 @@ export const HomePage = pageGlobal({
               label: 'Texto do link',
               type: 'text',
               defaultValue: 'Saiba mais',
-              admin: { description: 'Leva para a página Sobre.' },
             },
           ],
         },
+        linkGroup('link', 'Destino do link', { defaultPage: 'about' }),
         { name: 'title', label: 'Título', type: 'text' },
         {
           name: 'text',

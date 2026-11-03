@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { linkFields } from '@/fields/link'
 import { revalidateGlobal } from './hooks/revalidateGlobal'
 
 export const Header: GlobalConfig = {
@@ -23,20 +24,6 @@ export const Header: GlobalConfig = {
           fields: [
             { name: 'label', label: 'Texto', type: 'text', required: true, localized: true },
             {
-              // A page instead of a URL, so the link follows the visitor's language
-              name: 'page',
-              label: 'Página',
-              type: 'select',
-              required: true,
-              options: [
-                { label: 'Home', value: 'home' },
-                { label: 'Projetos', value: 'projects' },
-                { label: 'Sobre', value: 'about' },
-                { label: 'Equipamentos', value: 'uses' },
-                { label: 'Artigos', value: 'articles' },
-              ],
-            },
-            {
               name: 'soon',
               label: 'Em breve',
               type: 'checkbox',
@@ -47,6 +34,7 @@ export const Header: GlobalConfig = {
             },
           ],
         },
+        ...linkFields(),
       ],
     },
   ],

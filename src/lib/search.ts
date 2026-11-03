@@ -33,7 +33,8 @@ export async function getSearchIndex(locale: Locale): Promise<SearchItem[]> {
 
   // Fixed pages use the labels from the menu, so renaming them in the CMS reaches the search too
   const navLabel = (page: 'projects' | 'about' | 'uses') =>
-    header.navItems?.find((item) => item.page === page)?.label ?? t.pages[page]
+    header.navItems?.find((item) => (item.type ?? 'page') === 'page' && item.page === page)?.label ??
+    t.pages[page]
 
   const pages: SearchItem[] = [
     { id: 'page-home', group: 'pages', label: 'Home', href: routePath(locale, 'home') },

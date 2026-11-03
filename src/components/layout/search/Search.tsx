@@ -96,7 +96,14 @@ export default function Search({ locale, items, hire, email, t }: Props) {
     const otherLocale: Locale = locale === 'pt' ? 'en' : 'pt'
 
     const actions: Result[] = [
-      { id: 'action-hire', group: 'actions', label: t.actions.hire, href: hire.href, external: true },
+      {
+        id: 'action-hire',
+        group: 'actions',
+        // "...pelo WhatsApp" only while the button opens the chat
+        label: hire.href.startsWith('https://wa.me/') ? t.actions.hire : hire.label,
+        href: hire.href,
+        external: hire.blank,
+      },
       {
         id: 'action-email',
         group: 'actions',

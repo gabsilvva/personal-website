@@ -8,8 +8,7 @@ export const routes = {
   home: { pt: '/', en: '/' },
   about: { pt: '/sobre', en: '/about' },
   projects: { pt: '/projetos', en: '/projects' },
-  uses: { pt: '/equipamentos', en: '/uses' },
-  articles: { pt: '/artigos', en: '/articles' },
+  uses: { pt: '/vida', en: '/uses' },
 } as const satisfies Record<string, Record<Locale, string>>
 
 export type RouteKey = keyof typeof routes

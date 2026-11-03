@@ -5,7 +5,7 @@ import Stack from '@/components/layout/stack/Stack'
 import Stats from '@/components/layout/stats/Stats'
 import { type Locale } from '@/i18n/config'
 import { routePath } from '@/i18n/routes'
-import { hireLink } from '@/lib/links'
+import { hireLink, resolveLink, type ResolvedLink } from '@/lib/links'
 import { getPage, getSettings } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
 
@@ -17,6 +17,10 @@ import Hero from './_components/Hero'
 import Payment from './_components/Payment'
 import Process from './_components/Process'
 import Services from './_components/Services'
+
+/** A section's text link, only when it has both a label and a destination. */
+const withLabel = (label: string | null | undefined, link: ResolvedLink | null) =>
+  label && link ? { label, ...link } : null
 
 export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
   const locale = (await params).locale as Locale
@@ -54,7 +58,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         title={page.projects?.title}
         text={page.projects?.text}
         projects={populated(page.projects?.items)}
-        button={{ label: page.projects?.buttonLabel, href: routePath(locale, 'projects') }}
+        button={withLabel(page.projects?.buttonLabel, resolveLink(page.projects?.button, locale, 'projects'))}
         locale={locale}
       />
 
@@ -73,7 +77,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         title={page.about?.title}
         text={page.about?.text}
         image={page.about?.image}
-        link={{ label: page.about?.linkLabel, href: routePath(locale, 'about') }}
+        link={withLabel(page.about?.linkLabel, resolveLink(page.about?.link, locale, 'about'))}
         hire={hire}
       />
 

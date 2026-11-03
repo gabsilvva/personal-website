@@ -405,11 +405,11 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
 
   await updatePage('uses-page', {
     meta: {
-      title: 'Equipamentos — Gabriel da Silva',
+      title: 'Vida — Gabriel da Silva',
       description:
         'O hardware, os apps e as ferramentas que uso todos os dias para projetar e desenvolver.',
     },
-    subtitle: 'Equipamentos',
+    subtitle: 'Vida',
     title: 'Hardware // Apps // Tools\nDe Todos os Dias.',
     categories: [
       {
@@ -687,7 +687,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
           showInFooter: true,
         },
         { label: 'Strava', url: 'https://www.strava.com/', icon: 'strava' },
-        { label: 'Setup', url: '/equipamentos', icon: 'setup', highlight: true },
+        { label: 'Setup', url: '/vida', icon: 'setup', highlight: true },
       ],
       stats: [
         { value: '+6', label: 'Anos transformando ideias em produto' },
@@ -744,8 +744,9 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       navItems: [
         { label: 'Projetos', page: 'projects' },
         { label: 'Sobre', page: 'about' },
-        { label: 'Equipamentos', page: 'uses' },
-        { label: 'Artigos', page: 'articles', soon: true },
+        { label: 'Vida', page: 'uses' },
+        // The articles live on DEV.to
+        { label: 'Artigos', type: 'custom', url: 'https://dev.to/' },
       ],
     },
     req,
@@ -757,7 +758,10 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
     data: {
       contact: { subtitle: 'Quero contratar', title: 'Tem uma ideia?\nVamos colocar no ar.' },
       legalText: 'CNPJ 48.827.582/0001-00 | Gabriel da Silva - Dev & Design Studio © {ano}',
-      legalLinks: [privacy.id, terms.id],
+      legalLinks: [
+        { type: 'document', document: privacy.id },
+        { type: 'document', document: terms.id },
+      ],
     },
     req,
     context: { ...context },

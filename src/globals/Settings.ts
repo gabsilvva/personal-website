@@ -53,7 +53,10 @@ export const Settings: GlobalConfig = {
               name: 'whatsapp',
               label: 'WhatsApp',
               type: 'group',
-              admin: { description: 'Todos os botões de contratação do site abrem esta conversa.' },
+              admin: {
+                description:
+                  'Os botões de contratação do site abrem esta conversa, a menos que o botão "Quero contratar" tenha um link.',
+              },
               fields: [
                 {
                   name: 'number',
@@ -79,11 +82,26 @@ export const Settings: GlobalConfig = {
               type: 'group',
               fields: [
                 {
-                  name: 'label',
-                  label: 'Texto',
-                  type: 'text',
-                  localized: true,
-                  defaultValue: 'Quero contratar',
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'label',
+                      label: 'Texto',
+                      type: 'text',
+                      localized: true,
+                      defaultValue: 'Quero contratar',
+                    },
+                    {
+                      name: 'url',
+                      label: 'Link',
+                      type: 'text',
+                      localized: true,
+                      admin: {
+                        placeholder: 'https://',
+                        description: 'Vazio abre o WhatsApp acima. Ex.: agenda, formulário.',
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -140,7 +158,7 @@ export const Settings: GlobalConfig = {
                       localized: true,
                       admin: {
                         description:
-                          'Pode ser diferente por idioma (ex.: /equipamentos e /en/uses).',
+                          'Pode ser diferente por idioma (ex.: /vida e /en/uses).',
                       },
                     },
                   ],

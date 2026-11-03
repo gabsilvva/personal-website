@@ -10,9 +10,9 @@ import { routePath } from '@/i18n/routes'
 import { getPage } from '@/lib/payload'
 import { buildMetadata, plainTitle } from '@/lib/seo'
 
-import Category from './_components/Category'
+import Categories from './_components/Categories'
 
-export async function generateMetadata({ params }: PageProps<'/[locale]/equipamentos'>): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<'/[locale]/vida'>): Promise<Metadata> {
   const locale = (await params).locale as Locale
   const page = await getPage('uses-page', locale)
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/equipame
   })
 }
 
-export default async function Uses({ params }: PageProps<'/[locale]/equipamentos'>) {
+export default async function Uses({ params }: PageProps<'/[locale]/vida'>) {
   const locale = (await params).locale as Locale
   const page = await getPage('uses-page', locale)
   const t = getDictionary(locale).uses
@@ -46,13 +46,7 @@ export default async function Uses({ params }: PageProps<'/[locale]/equipamentos
 
       {!!page.categories?.length && (
         <section className="border-t border-light-black">
-          <Container>
-            <div className="border-x border-light-black max-sm:border-x-0">
-              {page.categories.map((category) => (
-                <Category key={category.id ?? category.title} {...category} labels={t} />
-              ))}
-            </div>
-          </Container>
+          <Categories categories={page.categories} labels={t} />
         </section>
       )}
     </>

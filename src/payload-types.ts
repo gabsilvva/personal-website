@@ -69,12 +69,9 @@ export interface Config {
   collections: {
     pages: Page;
     projects: Project;
-    posts: Post;
     media: Media;
-    categories: Category;
     users: User;
     redirects: Redirect;
-    search: Search;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
     'payload-folders': FolderInterface;
@@ -90,12 +87,9 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
-    search: SearchSelect<false> | SearchSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
@@ -385,80 +379,6 @@ export interface Project {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: number;
-  title: string;
-  heroImage?: (number | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (number | Post)[] | null;
-  categories?: (number | Category)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (number | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -504,44 +424,9 @@ export interface Redirect {
       | ({
           relationTo: 'projects';
           value: number | Project;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
         } | null);
     url?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search".
- */
-export interface Search {
-  id: number;
-  title?: string | null;
-  priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: number | Post;
-  };
-  slug?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
-  categories?:
-    | {
-        relationTo?: string | null;
-        categoryID?: string | null;
-        title?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -670,16 +555,8 @@ export interface PayloadLockedDocument {
         value: number | Project;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: number | Post;
-      } | null)
-    | ({
         relationTo: 'media';
         value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'categories';
-        value: number | Category;
       } | null)
     | ({
         relationTo: 'users';
@@ -688,10 +565,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'redirects';
         value: number | Redirect;
-      } | null)
-    | ({
-        relationTo: 'search';
-        value: number | Search;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -803,37 +676,6 @@ export interface ProjectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
- */
-export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  heroImage?: T;
-  content?: T;
-  relatedPosts?: T;
-  categories?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  publishedAt?: T;
-  authors?: T;
-  populatedAuthors?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-      };
-  generateSlug?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -930,26 +772,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  title?: T;
-  generateSlug?: T;
-  slug?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -984,33 +806,6 @@ export interface RedirectsSelect<T extends boolean = true> {
         type?: T;
         reference?: T;
         url?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search_select".
- */
-export interface SearchSelect<T extends boolean = true> {
-  title?: T;
-  priority?: T;
-  doc?: T;
-  slug?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  categories?:
-    | T
-    | {
-        relationTo?: T;
-        categoryID?: T;
-        title?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1144,6 +939,15 @@ export interface HomePage {
     title?: string | null;
     text?: string | null;
     items?: (number | Project)[] | null;
+    button?: {
+      type?: ('page' | 'document' | 'custom') | null;
+      page?: ('home' | 'projects' | 'about' | 'uses') | null;
+      document?: (number | null) | Page;
+      /**
+       * Links para outros sites abrem em nova aba. Pode ser diferente por idioma.
+       */
+      url?: string | null;
+    };
   };
   cta?: {
     /**
@@ -1165,10 +969,16 @@ export interface HomePage {
     | null;
   about?: {
     subtitle?: string | null;
-    /**
-     * Leva para a página Sobre.
-     */
     linkLabel?: string | null;
+    link?: {
+      type?: ('page' | 'document' | 'custom') | null;
+      page?: ('home' | 'projects' | 'about' | 'uses') | null;
+      document?: (number | null) | Page;
+      /**
+       * Links para outros sites abrem em nova aba. Pode ser diferente por idioma.
+       */
+      url?: string | null;
+    };
     title?: string | null;
     /**
      * Negrito aparece em destaque.
@@ -1392,7 +1202,7 @@ export interface Setting {
   };
   email: string;
   /**
-   * Todos os botões de contratação do site abrem esta conversa.
+   * Os botões de contratação do site abrem esta conversa, a menos que o botão "Quero contratar" tenha um link.
    */
   whatsapp?: {
     /**
@@ -1406,6 +1216,10 @@ export interface Setting {
   };
   hire?: {
     label?: string | null;
+    /**
+     * Vazio abre o WhatsApp acima. Ex.: agenda, formulário.
+     */
+    url?: string | null;
   };
   location?: {
     city?: string | null;
@@ -1422,7 +1236,7 @@ export interface Setting {
     | {
         label: string;
         /**
-         * Pode ser diferente por idioma (ex.: /equipamentos e /en/uses).
+         * Pode ser diferente por idioma (ex.: /vida e /en/uses).
          */
         url: string;
         icon?:
@@ -1487,11 +1301,17 @@ export interface Header {
   navItems?:
     | {
         label: string;
-        page: 'home' | 'projects' | 'about' | 'uses' | 'articles';
         /**
          * Mostra o selo "Soon" e desativa o link.
          */
         soon?: boolean | null;
+        type?: ('page' | 'document' | 'custom') | null;
+        page?: ('home' | 'projects' | 'about' | 'uses') | null;
+        document?: (number | null) | Page;
+        /**
+         * Links para outros sites abrem em nova aba. Pode ser diferente por idioma.
+         */
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1512,7 +1332,22 @@ export interface Footer {
    * Use {ano} (ou {year}) para o ano atual.
    */
   legalText?: string | null;
-  legalLinks?: (number | Page)[] | null;
+  legalLinks?:
+    | {
+        /**
+         * Vazio usa o título da página de texto.
+         */
+        label?: string | null;
+        type?: ('page' | 'document' | 'custom') | null;
+        page?: ('home' | 'projects' | 'about' | 'uses') | null;
+        document?: (number | null) | Page;
+        /**
+         * Links para outros sites abrem em nova aba. Pode ser diferente por idioma.
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1555,6 +1390,14 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         items?: T;
+        button?:
+          | T
+          | {
+              type?: T;
+              page?: T;
+              document?: T;
+              url?: T;
+            };
       };
   cta?:
     | T
@@ -1578,6 +1421,14 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         subtitle?: T;
         linkLabel?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              page?: T;
+              document?: T;
+              url?: T;
+            };
         title?: T;
         text?: T;
         image?: T;
@@ -1753,6 +1604,7 @@ export interface SettingsSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        url?: T;
       };
   location?:
     | T
@@ -1804,8 +1656,11 @@ export interface HeaderSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
-        page?: T;
         soon?: T;
+        type?: T;
+        page?: T;
+        document?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1824,7 +1679,16 @@ export interface FooterSelect<T extends boolean = true> {
         title?: T;
       };
   legalText?: T;
-  legalLinks?: T;
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        page?: T;
+        document?: T;
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1855,10 +1719,6 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'projects';
           value: number | Project;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
         } | null);
     global?: ('home-page' | 'about-page' | 'projects-page' | 'uses-page') | null;
     user?: {
@@ -1867,52 +1727,6 @@ export interface TaskSchedulePublish {
     } | null;
   };
   output?: unknown;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

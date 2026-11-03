@@ -7,7 +7,7 @@ const pt = {
   pages: {
     about: 'Sobre',
     projects: 'Projetos',
-    uses: 'Equipamentos',
+    uses: 'Vida',
   },
   nav: {
     home: 'Página inicial',
@@ -40,6 +40,8 @@ const pt = {
   uses: {
     collapse: 'Recolher',
     expand: 'Expandir',
+    collapseAll: 'Recolher todos',
+    expandAll: 'Expandir todos',
   },
   legal: {
     updated: 'Atualizado em',
@@ -60,7 +62,7 @@ const pt = {
     groups: {
       pages: 'Páginas',
       projects: 'Projetos',
-      uses: 'Equipamentos',
+      uses: 'Vida',
       socials: 'Redes',
       actions: 'Ações',
     },
@@ -117,6 +119,8 @@ const en: Dictionary = {
   uses: {
     collapse: 'Collapse',
     expand: 'Expand',
+    collapseAll: 'Collapse all',
+    expandAll: 'Expand all',
   },
   legal: {
     updated: 'Last updated on',

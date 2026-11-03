@@ -4,10 +4,8 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
-import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
 import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
 import { Footer } from './globals/Footer'
@@ -93,7 +91,7 @@ export default buildConfig({
     push: process.env.DATABASE_PUSH === 'true',
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
-  collections: [Pages, Projects, Posts, Media, Categories, Users],
+  collections: [Pages, Projects, Media, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [HomePage, AboutPage, ProjectsPage, UsesPage, Settings, Header, Footer],
   // Admin interface language

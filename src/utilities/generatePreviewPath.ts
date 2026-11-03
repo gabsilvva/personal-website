@@ -1,10 +1,10 @@
 import { PreviewSearchParams } from '@/app/(frontend)/next/preview/route'
 import { isLocale, type Locale } from '@/i18n/config'
-import { pagePath, projectPath, withLocale } from '@/i18n/routes'
+import { pagePath, projectPath } from '@/i18n/routes'
 import { PayloadRequest, CollectionSlug } from 'payload'
 
 type Props = {
-  collection: Extract<CollectionSlug, 'pages' | 'projects' | 'posts'>
+  collection: Extract<CollectionSlug, 'pages' | 'projects'>
   slug: string
   /** Admin locale, as a code or `{ code }`. */
   locale?: unknown
@@ -36,7 +36,6 @@ export const generatePreviewPath = ({ collection, slug, locale }: Props) => {
   const target = toLocale(locale)
 
   if (collection === 'projects') return previewUrl(projectPath(target, encoded))
-  if (collection === 'posts') return previewUrl(withLocale(target, `/artigos/${encoded}`))
 
   return previewUrl(pagePath(target, encoded))
 }

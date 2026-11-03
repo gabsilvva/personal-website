@@ -15,7 +15,7 @@ type Props = {
   title?: string | null
   text?: SerializedEditorState | null
   image?: number | MediaType | null
-  link?: { label?: string | null; href: string }
+  link?: { label?: string | null; href: string; blank?: boolean } | null
   hire: { label: string; href: string; blank: boolean }
 }
 
@@ -49,7 +49,11 @@ export default function About({ subtitle, title, text, image, link, hire }: Prop
               <Button href={hire.href} blank={hire.blank}>
                 {hire.label}
               </Button>
-              {link?.label && <Flat href={link.href}>{link.label}</Flat>}
+              {link?.label && (
+                <Flat href={link.href} blank={link.blank}>
+                  {link.label}
+                </Flat>
+              )}
             </div>
           </div>
 

@@ -103,6 +103,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
                       <Link
                         href={item.href}
                         target={item.blank ? '_blank' : undefined}
+                        rel={item.blank ? 'noopener noreferrer' : undefined}
                         className="block text-[15px] leading-none font-medium text-white transition-opacity hover:opacity-70"
                       >
                         {item.label}
@@ -186,6 +187,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
                 <Link
                   href={item.href}
                   target={item.blank ? '_blank' : undefined}
+                  rel={item.blank ? 'noopener noreferrer' : undefined}
                   onClick={() => setOpen(false)}
                   className="font-display flex items-center justify-between py-5 text-[40px] leading-none text-white"
                 >

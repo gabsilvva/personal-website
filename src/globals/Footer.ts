@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { linkFields } from '@/fields/link'
 import { localizeTextFields } from '@/fields/localize'
 import { revalidateGlobal } from './hooks/revalidateGlobal'
 
@@ -37,9 +38,16 @@ export const Footer: GlobalConfig = {
     {
       name: 'legalLinks',
       label: 'Links legais',
-      type: 'relationship',
-      relationTo: 'pages',
-      hasMany: true,
+      type: 'array',
+      fields: [
+        {
+          name: 'label',
+          label: 'Texto',
+          type: 'text',
+          admin: { description: 'Vazio usa o título da página de texto.' },
+        },
+        ...linkFields({ defaultType: 'document' }),
+      ],
     },
   ]),
   hooks: {

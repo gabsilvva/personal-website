@@ -14,5 +14,11 @@ export const redirects: NextConfig['redirects'] = async () => {
     source: '/:path((?!ie-incompatible.html$).*)', // all pages except the incompatibility page
   }
 
-  return [internetExplorerRedirect]
+  // Old URLs of renamed pages, so shared links keep working
+  const renamed = [
+    { source: '/equipamentos', destination: '/vida', permanent: true },
+    { source: '/en/equipamentos', destination: '/en/uses', permanent: true },
+  ]
+
+  return [internetExplorerRedirect, ...renamed]
 }

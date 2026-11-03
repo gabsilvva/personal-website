@@ -13,8 +13,8 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import JsonLd from '@/components/seo/JsonLd'
 import { htmlLang, isLocale, locales } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
-import { pagePath, routePath } from '@/i18n/routes'
-import { hireLink } from '@/lib/links'
+import { routePath } from '@/i18n/routes'
+import { hireLink, resolveLink } from '@/lib/links'
 import { getFooter, getHeader, getPage, getSettings } from '@/lib/payload'
 import { getSearchIndex } from '@/lib/search'
 import { SITE_NAME, SITE_URL } from '@/lib/site'
@@ -62,15 +62,16 @@ export default async function Layout({ children, params }: LayoutProps<'/[locale
   const t = getDictionary(locale)
   const hire = hireLink(settings)
 
-  const navItems = (header.navItems ?? []).map((item) => ({
-    label: item.label,
-    href: routePath(locale, item.page),
-    soon: !!item.soon,
-  }))
+  const navItems = (header.navItems ?? []).map((item) => {
+    const link = resolveLink(item, locale)
+    return { label: item.label, href: link?.href ?? null, blank: link?.blank, soon: !!item.soon }
+  })
 
-  const legalLinks = (footer.legalLinks ?? []).flatMap((page) =>
-    typeof page === 'object' ? [{ label: page.title, href: pagePath(locale, page.slug) }] : [],
-  )
+  const legalLinks = (footer.legalLinks ?? []).flatMap((item) => {
+    const link = resolveLink(item, locale)
+    const label = item.label || (typeof item.document === 'object' ? item.document?.title : null)
+    return link && label ? [{ label, ...link }] : []
+  })
 
   // Who owns the site, for search engines: name, role, contact and public profiles
   const structuredData = [

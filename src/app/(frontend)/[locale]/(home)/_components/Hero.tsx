@@ -35,7 +35,7 @@ export default function Hero({
     <section>
       {/* Desktop: the photo floats behind the content. Mobile: blocks are stacked with `order` */}
       <Container className="relative flex flex-col">
-        <figure className="pointer-events-none absolute -top-10 left-1/2 h-[800px] w-[428px] max-sm:relative max-sm:top-auto max-sm:left-auto max-sm:order-2 max-sm:-mx-pm max-sm:mt-6 max-sm:h-[min(118vw,760px)] max-sm:w-[calc(100%+var(--spacing-pm)*2)] opacity-75">
+        <figure className="pointer-events-none absolute -top-10 left-1/2 h-[800px] w-[428px] max-sm:relative max-sm:top-auto max-sm:left-auto max-sm:order-2 max-sm:-mx-pm max-sm:mt-6 max-sm:h-[min(118vw,760px)] max-sm:w-[calc(100%+var(--spacing-pm)*2)]">
           <Media
             resource={image}
             fill
