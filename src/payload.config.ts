@@ -27,6 +27,15 @@ import { isLocalDatabase } from './utilities/isLocalDatabase'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// `vercel env pull --environment=production` writes "[SENSITIVE]" instead of secret values
+for (const key of ['DATABASE_URL', 'BLOB_READ_WRITE_TOKEN'] as const) {
+  if (process.env[key]?.includes('[SENSITIVE]')) {
+    throw new Error(
+      `${key} is the "[SENSITIVE]" placeholder from \`vercel env pull\`. Copy the real value into .env.local.`,
+    )
+  }
+}
+
 // Without the Blob token, uploads land on this machine's disk while their rows go to the shared
 // database, so production would show broken images. `vercel env pull` brings both together.
 if (!isLocalDatabase(process.env.DATABASE_URL) && !process.env.BLOB_READ_WRITE_TOKEN) {
