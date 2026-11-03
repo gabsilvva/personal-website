@@ -50,6 +50,21 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   redirects,
+  async rewrites() {
+    return {
+      // Paths with a dot skip the proxy (it leaves files alone), so one that is not a real file
+      // (e.g. /wp-login.php) would reach the root layout with an invalid locale and fail. After
+      // files and fixed routes, send it to the Portuguese site, where it gets the regular 404.
+      afterFiles: [
+        {
+          source: '/:path((?!pt/|en/|api/|admin|_next/|next/).*\\..*)',
+          destination: '/pt/:path',
+        },
+      ],
+      beforeFiles: [],
+      fallback: [],
+    }
+  },
   async headers() {
     return [
       {
