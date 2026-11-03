@@ -94,7 +94,7 @@ export default function Hero({
             className="flex h-42 w-[440px] flex-col justify-center gap-6 rounded-lg bg-white px-12 transition-colors hover:bg-light-gray max-sm:h-28 max-sm:w-full max-sm:gap-4 max-sm:px-6"
           >
             {cta.label && (
-              <span className="text-base leading-none text-gray uppercase max-sm:text-sm">{cta.label}</span>
+              <span className="text-base leading-none text-graphite uppercase max-sm:text-sm">{cta.label}</span>
             )}
             {cta.title && (
               <span className="font-display text-[32px] leading-none text-black max-sm:text-[28px]">{cta.title}</span>

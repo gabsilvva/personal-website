@@ -19,9 +19,14 @@ const imageUrl = (media?: number | Media | null) => {
   return /^https?:\/\//.test(media.url) ? media.url : absoluteUrl(media.url)
 }
 
-/** Real profile URLs (with a path), not placeholders like https://github.com/ */
+/**
+ * Real profile URLs (with a path), not placeholders like https://github.com/, nor files on this
+ * site such as the CV
+ */
 export const profileUrls = (settings: Setting) =>
-  (settings.socials ?? []).map((social) => social.url).filter((url) => /^https?:\/\/[^/]+\/.+/.test(url))
+  (settings.socials ?? [])
+    .map((social) => social.url)
+    .filter((url) => /^https?:\/\/[^/]+\/.+/.test(url) && !url.startsWith(SITE_URL))
 
 /** The site and its owner, on every page. */
 export function siteGraph({ locale, settings, home }: { locale: Locale; settings: Setting; home: HomePage }) {

@@ -103,7 +103,7 @@ export const translateToEnglish = async ({
     hire: { label: 'Hire me' },
     location: { city: 'Rio, Brazil' },
     socials: [
-      { label: 'My CV' },
+      { label: 'My CV', url: '/cv/en.pdf' },
       same,
       same,
       same,

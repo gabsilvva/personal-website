@@ -54,8 +54,13 @@ export default function Search({ locale, items, hire, email, t }: Props) {
   const [active, setActive] = useState(0)
   const [copied, setCopied] = useState(false)
   const listRef = useRef<HTMLUListElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // Where the focus was before opening (the input takes it on mount), to return it on close
+  const returnFocus = useRef<HTMLElement | null>(null)
 
   const show = () => {
+    returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
     setQuery('')
     setActive(0)
     setCopied(false)
@@ -83,12 +88,27 @@ export default function Search({ locale, items, hire, email, t }: Props) {
     }
   }, [])
 
-  // The page behind must not scroll
+  // A modal: the page behind can't scroll, be clicked or take focus (`inert`), Esc closes from
+  // anywhere, and focus goes back to where it was (e.g. the nav button) when it closes
   useEffect(() => {
     if (!open) return
+
+    const previous = returnFocus.current
+    const root = rootRef.current
+    const behind = [...document.body.children].filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && element !== root && !element.inert,
+    )
+    behind.forEach((element) => (element.inert = true))
     document.body.style.overflow = 'hidden'
+
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+
     return () => {
+      behind.forEach((element) => (element.inert = false))
       document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+      previous?.focus?.()
     }
   }, [open])
 
@@ -173,6 +193,9 @@ export default function Search({ locale, items, hire, email, t }: Props) {
     } else if (event.key === 'Escape') {
       event.preventDefault()
       close()
+    } else if (event.key === 'Tab') {
+      // The input is the only stop in the dialog: results are picked with the arrows
+      event.preventDefault()
     }
   }
 
@@ -181,7 +204,7 @@ export default function Search({ locale, items, hire, email, t }: Props) {
   const activeId = results[active] ? `search-${results[active].id}` : undefined
 
   return (
-    <div className="fixed inset-0 z-100 flex items-start justify-center px-pm pt-[12vh] max-sm:pt-4">
+    <div ref={rootRef} className="fixed inset-0 z-100 flex items-start justify-center px-pm pt-[12vh] max-sm:pt-4">
       <button
         type="button"
         aria-label={t.hints.close}

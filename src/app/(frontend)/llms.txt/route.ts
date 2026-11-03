@@ -89,6 +89,9 @@ export async function GET() {
     `## Contato\n\n${[
       settings.email ? `- E-mail: ${settings.email}` : '',
       `- ${hire.label}: ${hire.href}`,
+      ...(settings.socials ?? [])
+        .filter((social) => social.icon === 'cv' && social.url.length > 1)
+        .map((social) => `- ${social.label}: ${/^https?:/.test(social.url) ? social.url : absoluteUrl(social.url)}`),
       ...profileUrls(settings).map((url) => `- ${url}`),
     ]
       .filter(Boolean)

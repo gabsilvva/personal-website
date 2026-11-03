@@ -26,8 +26,14 @@ export const Media: CollectionConfig = {
   fields: [
     {
       name: 'alt',
+      label: 'Texto alternativo',
       type: 'text',
-      //required: true,
+      required: true,
+      localized: true,
+      admin: {
+        description:
+          'Descreva a imagem para quem usa leitor de tela e para os buscadores. Ex.: "Home do site da Brinov".',
+      },
     },
     {
       name: 'caption',

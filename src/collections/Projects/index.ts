@@ -176,7 +176,6 @@ export const Projects: CollectionConfig<'projects'> = {
       autosave: {
         interval: 100, // Optimal for live preview
       },
-      schedulePublish: true,
     },
     maxPerDoc: 50,
   },

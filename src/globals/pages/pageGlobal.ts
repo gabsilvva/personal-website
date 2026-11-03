@@ -71,7 +71,6 @@ export const pageGlobal = ({ slug, label, route, tabs }: Options): GlobalConfig 
         autosave: {
           interval: 100, // We set this interval for optimal live preview
         },
-        schedulePublish: true,
       },
       max: 50,
     },

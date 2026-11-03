@@ -666,7 +666,7 @@ const seedContent = async ({ payload, req }: { payload: Payload; req: PayloadReq
       location: { city: 'Rio, Brasil', utc: 'UTC−3', timezone: 'America/Sao_Paulo' },
       // Placeholder URLs: replace with the real profiles in the admin
       socials: [
-        { label: 'Meu CV', url: '#', icon: 'cv' },
+        { label: 'Meu CV', url: '/cv/pt.pdf', icon: 'cv' },
         { label: 'WhatsApp', url: 'https://wa.me/', icon: 'whatsapp' },
         { label: 'Reddit', url: 'https://www.reddit.com/', icon: 'reddit' },
         { label: 'Spotify', url: 'https://open.spotify.com/', icon: 'spotify' },

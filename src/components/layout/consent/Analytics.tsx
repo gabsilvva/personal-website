@@ -112,7 +112,7 @@ export default function Analytics({ gaId, privacyHref, t }: Props) {
           aria-label={t.label}
           className="fixed bottom-6 left-6 z-100 w-105 rounded-lg border border-light-black bg-dark-gray p-6 motion-safe:animate-[fade-in_300ms_ease-out] max-sm:inset-x-pm max-sm:bottom-4 max-sm:w-auto max-sm:p-5"
         >
-          <p className="text-sm leading-[1.7] font-light text-light-gray">
+          <p className="text-sm leading-[1.7] font-light text-gray">
             {t.text}{' '}
             {privacyHref && (
               <Link href={privacyHref} className="font-normal text-white underline hover:opacity-70">

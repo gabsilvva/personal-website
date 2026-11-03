@@ -11,7 +11,8 @@ export default function Subtitle({ color = 'light', className, children }: Props
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-4 text-base leading-none text-gray uppercase max-sm:text-sm',
+        'inline-flex items-center gap-4 text-base leading-none uppercase max-sm:text-sm',
+        color === 'light' ? 'text-gray' : 'text-graphite',
         className,
       )}
     >

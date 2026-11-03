@@ -3,8 +3,11 @@
   --color-dark-gray: #171717;
   --color-shade: #0e0e0e;
   --color-light-black: #2c2c2c;
-  --color-dim-gray: #727070;
-  --color-gray: #636363;
+  /* Grays for text on dark backgrounds: at least 4.5:1 on black and on dark-gray (WCAG AA) */
+  --color-dim-gray: #828080;
+  --color-gray: #808080;
+  /* Muted text on white and light-gray backgrounds */
+  --color-graphite: #636363;
   --color-light-gray: #dfdfdf;
   --color-white: #ffffff;
   --color-orange: #ee5a24;
