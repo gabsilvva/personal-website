@@ -23,6 +23,16 @@ export const loadscreenScript = `(function(){var d=document.documentElement,done
 const noSubscribe = () => () => {}
 const alreadySeen = () => document.documentElement.hasAttribute(SEEN_ATTRIBUTE)
 
+/**
+ * `loadscreenScript` in the server HTML only. The server snapshot also applies while hydrating,
+ * so the tag matches; a later client mount (switching locale remounts the root layout) renders
+ * nothing, since React never runs a script it creates and warns about it.
+ */
+export function LoadscreenScript() {
+  const fromServer = !useSyncExternalStore(noSubscribe, () => true, () => false)
+  return fromServer ? <script dangerouslySetInnerHTML={{ __html: loadscreenScript }} /> : null
+}
+
 /** Share of the visible images and the fonts that finished loading, from 0 to 1. */
 const loadedShare = () => {
   const images = [...document.images].filter((image) => image.loading !== 'lazy')

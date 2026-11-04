@@ -9,7 +9,7 @@ import Analytics from '@/components/layout/consent/Analytics'
 import Footer from '@/components/layout/footer/Footer'
 import Nav from '@/components/layout/nav/Nav'
 import Search from '@/components/layout/search/Search'
-import Loadscreen, { loadscreenScript } from '@/components/layout/loadscreen/Loadscreen'
+import Loadscreen, { LoadscreenScript } from '@/components/layout/loadscreen/Loadscreen'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import JsonLd from '@/components/seo/JsonLd'
 import { htmlLang, isLocale, locales } from '@/i18n/config'
@@ -120,7 +120,7 @@ export default async function Layout({ children, params }: LayoutProps<'/[locale
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: loadscreenScript }} />
+        <LoadscreenScript />
         <noscript>
           <style>{'#loadscreen{display:none}body{overflow:auto!important}[data-reveal]{opacity:1!important;transform:none!important}'}</style>
         </noscript>
