@@ -33,6 +33,7 @@ export const Projects: CollectionConfig<'projects'> = {
     soon: true,
     url: true,
     thumbnail: true,
+    logo: true,
     technologies: true,
   },
   admin: {

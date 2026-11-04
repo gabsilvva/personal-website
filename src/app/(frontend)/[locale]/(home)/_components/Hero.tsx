@@ -86,7 +86,7 @@ export default function Hero({
           </div>
         </Reveal>
 
-        <div className="relative mt-50 flex items-end justify-between gap-10 max-sm:order-4 max-sm:mt-10 max-sm:flex-col max-sm:items-stretch max-sm:gap-8">
+        <div className="relative mt-50 flex items-center justify-between gap-10 max-sm:order-4 max-sm:mt-10 max-sm:flex-col max-sm:items-stretch max-sm:gap-8">
           <Link
             href={cta.href}
             target={cta.blank ? '_blank' : undefined}

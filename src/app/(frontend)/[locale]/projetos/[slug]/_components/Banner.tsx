@@ -28,7 +28,7 @@ export default function Banner({ client, title, logo, summary, url, hire, visitL
               {client && <Subtitle>{client}</Subtitle>}
               <h1 className="mt-8">{title}</h1>
             </div>
-            <div className="flex items-center gap-10">
+            <div className="flex items-center max-sm:gap-8 gap-20">
               <Button href={hire.href} blank={hire.blank}>
                 {hire.label}
               </Button>

@@ -52,7 +52,7 @@ export default async function Projects({ params }: PageProps<'/[locale]/projetos
       />
       <Banner subtitle={page.banner?.subtitle} title={page.banner?.title} text={page.banner?.text} />
       <List
-        projects={projects.map(({ id, title, slug, year, soon, url, thumbnail, technologies, categories }) => ({
+        projects={projects.map(({ id, title, slug, year, soon, url, thumbnail, logo, technologies, categories }) => ({
           id,
           title,
           slug,
@@ -60,6 +60,7 @@ export default async function Projects({ params }: PageProps<'/[locale]/projetos
           soon,
           url,
           thumbnail,
+          logo,
           technologies,
           categories,
         }))}

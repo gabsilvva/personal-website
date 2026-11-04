@@ -179,7 +179,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
               style={{ transitionDelay: open ? `${index * 50}ms` : '0ms' }}
             >
               {item.soon || !item.href ? (
-                <span className="font-display flex items-center gap-3 py-5 text-[40px] leading-none text-gray">
+                <span className="font-display flex items-center gap-3 py-5 text-3xl leading-none text-gray">
                   {item.label}
                   {item.soon && <Tag variant="mini">SOON</Tag>}
                 </span>
@@ -189,7 +189,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
                   target={item.blank ? '_blank' : undefined}
                   rel={item.blank ? 'noopener noreferrer' : undefined}
                   onClick={() => setOpen(false)}
-                  className="font-display flex items-center justify-between py-5 text-[40px] leading-none text-white"
+                  className="font-display flex items-center justify-between py-5 text-3xl leading-none text-white"
                 >
                   {item.label}
                   <Image src="/svg/arrow-up-right-small.svg" alt="" width={24} height={24} className="size-5" />

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState, type ReactNode } from 'react'
 
 import type { ProjectCardData } from '@/components/interface/card/Project'
-import Media from '@/components/interface/media/Media'
+import ProjectCover from '@/components/interface/card/ProjectCover'
 import Tag from '@/components/interface/tag/Tag'
 import Container from '@/components/layout/container/Container'
 import type { Locale } from '@/i18n/config'
@@ -181,19 +181,18 @@ export default function Services({ items, locale }: Props) {
                               )}
                             </div>
                           </div>
-                          <figure className="relative mt-4 aspect-[400/333] overflow-hidden rounded-lg bg-dark-gray">
-                            <Media
-                              resource={service.case.thumbnail}
-                              fill
-                              sizes="400px"
-                              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                            />
+                          <ProjectCover
+                            thumbnail={service.case.thumbnail}
+                            logo={service.case.logo}
+                            sizes="400px"
+                            className="mt-4 aspect-[400/333]"
+                          >
                             {service.case.soon && (
-                              <Tag variant="soon" className="absolute top-6 left-6">
+                              <Tag variant="soon" className="absolute top-6 left-6 z-40">
                                 {t.soon}
                               </Tag>
                             )}
-                          </figure>
+                          </ProjectCover>
                         </Link>
                       </div>
                     </Collapse>
