@@ -89,7 +89,10 @@ export default buildConfig({
   editor: defaultLexical,
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      // pg already treats `require` as `verify-full` and warns that this will change; asking for
+      // verify-full keeps the full certificate check and silences the warning. The Neon
+      // integration manages DATABASE_URL on Vercel, so it is normalized here instead.
+      connectionString: (process.env.DATABASE_URL || '').replace(/sslmode=(prefer|require|verify-ca)\b/, 'sslmode=verify-full'),
     },
     // Schema changes only go through migrations (src/migrations), never through dev-mode push.
     // This keeps `pnpm dev` from silently altering the shared production database.
