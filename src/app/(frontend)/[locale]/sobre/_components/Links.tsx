@@ -17,7 +17,14 @@ export default function Links({ subtitle, links }: Props) {
   if (!links.length) return null
 
   return (
-    <section className="mt-40 max-sm:mt-between-mob">
+    <section className="relative max-sm:mt-between-mob max-sm:pt-0">
+      {/* The 4th column line comes down from the list above, through the gap and the subtitle */}
+      <Container className="pointer-events-none absolute inset-x-0 top-0 h-full max-sm:hidden">
+        <div className="grid h-full grid-cols-4">
+          <span aria-hidden className="col-start-4 border-l border-light-black" />
+        </div>
+      </Container>
+
       <Container>{subtitle && <Subtitle className="flex">{subtitle}</Subtitle>}</Container>
 
       {/* Desktop, as in the design: the column lines run 120px past the grid above and below,

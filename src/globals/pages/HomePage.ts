@@ -15,7 +15,13 @@ export const HomePage = pageGlobal({
         {
           type: 'row',
           fields: [
-            { name: 'greeting', label: 'Saudação', type: 'text', defaultValue: 'Olá!' },
+            {
+              name: 'greeting',
+              label: 'Saudação',
+              type: 'text',
+              defaultValue: 'Olá!',
+              admin: { description: 'Deixe vazio para mostrar a saudação animada em vários idiomas.' },
+            },
             { name: 'title', label: 'Título', type: 'text' },
           ],
         },

@@ -22,14 +22,16 @@ export default function Hero({ title, subtitle, image, text, hire, location }: P
   return (
     <section>
       <Container>
-        <div className="grid grid-cols-[339px_1fr] pt-[138px] max-sm:grid-cols-1 max-sm:pt-12">
-          <div className="border-x border-light-black max-sm:hidden">
+        {/* Same 4 columns as the stats below: the signature takes the first, and its lines are
+            the left borders of both columns, so they meet the stats lines on the same pixel */}
+        <div className="grid grid-cols-4 pt-[138px] max-sm:grid-cols-1 max-sm:pt-12">
+          <div className="border-l border-light-black max-sm:hidden">
             <div className="flex h-[305px] items-center justify-center bg-dark-gray">
               <Image src="/img/signature.png" alt="" width={105} height={160} />
             </div>
           </div>
 
-          <div>
+          <div className="col-span-3 border-l border-light-black max-sm:col-span-1 max-sm:border-l-0">
             <Reveal className="relative border-b border-light-black pb-4">
               <Media
                 resource={image}

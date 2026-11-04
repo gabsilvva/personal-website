@@ -1,12 +1,16 @@
 import Link from 'next/link'
 
+import Greeting from './Greeting'
 import Location from '@/components/interface/location/Location'
 import Media from '@/components/interface/media/Media'
 import Reveal from '@/components/interface/reveal/Reveal'
 import Container from '@/components/layout/container/Container'
+import type { Locale } from '@/i18n/config'
 import type { Media as MediaType, Setting } from '@/payload-types'
 
 type Props = {
+  locale: Locale
+  /** From the admin; when empty, the hero cycles through greetings in several languages. */
   greeting?: string | null
   title?: string | null
   rolesLeft?: string | null
@@ -20,6 +24,7 @@ type Props = {
 }
 
 export default function Hero({
+  locale,
   greeting,
   title,
   rolesLeft,
@@ -49,7 +54,11 @@ export default function Hero({
         <Reveal className="relative max-sm:order-1">
           <div className="flex items-start justify-between gap-10 pt-30 max-sm:flex-col max-sm:gap-6 max-sm:pt-10">
             <div>
-              {greeting && <p className="text-base leading-none font-normal text-gray uppercase">{greeting}</p>}
+              {greeting ? (
+                <p className="text-base leading-none font-normal text-gray uppercase">{greeting}</p>
+              ) : (
+                <Greeting locale={locale} className="text-base leading-none font-normal text-gray uppercase" />
+              )}
               {title && <h1 className="mt-4">{title}</h1>}
             </div>
             {location && (

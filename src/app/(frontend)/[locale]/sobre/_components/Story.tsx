@@ -1,11 +1,12 @@
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
-import Media from '@/components/interface/media/Media'
+import Media, { hasMedia } from '@/components/interface/media/Media'
 import Reveal from '@/components/interface/reveal/Reveal'
 import RichText from '@/components/interface/rich-text/RichText'
 import Subtitle from '@/components/interface/subtitle/Subtitle'
 import Container from '@/components/layout/container/Container'
 import type { Media as MediaType } from '@/payload-types'
+import { cn } from '@/utilities/ui'
 
 type Props = {
   subtitle?: string | null
@@ -15,11 +16,17 @@ type Props = {
 }
 
 export default function Story({ subtitle, text, favorites, image }: Props) {
+  // The memoji hangs 48px below the list and is 212px tall: both columns keep that space free
+  // at the bottom (desktop only), so no text ever sits behind it
+  const memojiSpace = hasMedia(image) && 'sm:pb-44'
+
   return (
     <section className="mt-between max-sm:mt-between-mob">
       <Container>
-        <div className="grid grid-cols-[1fr_380px] gap-10 max-sm:grid-cols-1">
-          <Reveal>
+        {/* The list takes the 4th column of the stats above and the links below, so its line
+            continues theirs: it rises through the gap up to the stats */}
+        <div className="grid grid-cols-4 max-sm:grid-cols-1 max-sm:gap-10">
+          <Reveal className={cn('col-span-3 pr-10 max-sm:col-span-1 max-sm:pr-0', memojiSpace)}>
             {subtitle && <Subtitle>{subtitle}</Subtitle>}
             <RichText
               data={text}
@@ -29,7 +36,12 @@ export default function Story({ subtitle, text, favorites, image }: Props) {
           </Reveal>
 
           {!!favorites?.length && (
-            <div className="relative -mr-pd border-l border-light-black max-sm:mr-0 max-sm:border-l-0">
+            <div
+              className={cn(
+                'relative -mt-between -mr-pd border-l border-light-black pt-between max-sm:mt-0 max-sm:mr-0 max-sm:border-l-0 max-sm:pt-0',
+                memojiSpace,
+              )}
+            >
               <dl className="max-sm:grid max-sm:grid-cols-2 max-sm:border-t max-sm:border-light-black">
                 {favorites.map((favorite) => (
                   <div
@@ -45,7 +57,8 @@ export default function Story({ subtitle, text, favorites, image }: Props) {
                 resource={image}
                 width={200}
                 height={212}
-                className="absolute -bottom-12 -left-[170px] w-[200px] max-sm:hidden"
+                // In front of the links line that continues this column's line below
+                className="absolute -bottom-12 -left-[170px] z-10 w-[200px] max-sm:hidden"
               />
             </div>
           )}

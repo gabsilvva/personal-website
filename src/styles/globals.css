@@ -31,6 +31,21 @@
   }
 }
 
+/* Hero greeting: the word leaves upwards while the next one comes in from below */
+@keyframes greeting-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes greeting-out {
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
 @keyframes search-in {
   from {
     opacity: 0;

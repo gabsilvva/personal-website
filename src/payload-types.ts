@@ -724,6 +724,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface HomePage {
   id: number;
   hero?: {
+    /**
+     * Deixe vazio para mostrar a saudação animada em vários idiomas.
+     */
     greeting?: string | null;
     title?: string | null;
     /**

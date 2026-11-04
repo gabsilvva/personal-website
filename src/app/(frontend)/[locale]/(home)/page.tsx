@@ -48,6 +48,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
       {services && <JsonLd data={services} />}
       <Hero
         {...page.hero}
+        locale={locale}
         cta={{ label: page.hero?.ctaLabel, title: page.hero?.ctaTitle, href: hire.href, blank: hire.blank }}
         location={settings.location}
       />
