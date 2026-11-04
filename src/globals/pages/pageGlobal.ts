@@ -1,14 +1,12 @@
 import type { GlobalAfterChangeHook, GlobalConfig, Tab } from 'payload'
 
-import { revalidatePath } from 'next/cache'
-
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { localizeTabs } from '@/fields/localize'
 import { seoTab } from '@/fields/seoTab'
 import { isLocale } from '@/i18n/config'
 import { routePath, routes, type RouteKey } from '@/i18n/routes'
 import { previewUrl } from '@/utilities/generatePreviewPath'
-import { revalidateDiscovery } from '@/hooks/revalidateDiscovery'
+import { revalidateRoute, revalidateSite } from '@/hooks/revalidateDiscovery'
 
 type Options = {
   slug: string
@@ -30,16 +28,14 @@ const localeCode = (locale: unknown) => {
  */
 export const pageGlobal = ({ slug, label, route, tabs }: Options): GlobalConfig => {
   const folder = routes[route].pt
-  // Route pattern revalidates the page in every locale
-  const pattern = `/[locale]${folder === '/' ? '' : folder}`
 
   const revalidate: GlobalAfterChangeHook = ({ doc, req: { payload, context } }) => {
-    if (!context.disableRevalidate) {
-      payload.logger.info(`Revalidating page: ${pattern}`)
-      revalidatePath(pattern, 'page')
+    // Autosaved drafts never reach visitors, so only a publish re-renders the page
+    if (!context.disableRevalidate && doc?._status !== 'draft') {
+      payload.logger.info(`Revalidating page: ${folder}`)
       // The uses page also feeds the search of every page
-      if (route === 'uses') revalidatePath('/[locale]', 'layout')
-      revalidateDiscovery()
+      if (route === 'uses') revalidateSite()
+      else revalidateRoute(folder)
     }
 
     return doc
