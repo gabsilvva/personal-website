@@ -24,7 +24,7 @@ export default function Story({ subtitle, text, favorites, image }: Props) {
             <RichText
               data={text}
               variant="emphasis"
-              className="mt-8 max-w-[860px] text-xl [&_p]:text-xl max-sm:[&_p]:text-base"
+              className="mt-8 max-w-[830px] text-xl [&_p]:text-xl max-sm:[&_p]:text-base"
             />
           </Reveal>
 
