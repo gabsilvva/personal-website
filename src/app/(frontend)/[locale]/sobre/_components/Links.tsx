@@ -67,7 +67,7 @@ export default function Links({ subtitle, links }: Props) {
                           alt=""
                           width={24}
                           height={24}
-                          className={cn('size-6 object-contain', pngIcons.includes(link.icon) && 'opacity-40 grayscale')}
+                          className={cn('size-6 object-contain', pngIcons.includes(link.icon) && 'grayscale')}
                         />
                       )}
                     </Link>

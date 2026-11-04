@@ -120,7 +120,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
                 onClick={openSearch}
                 aria-label={t.search}
                 aria-keyshortcuts="Control+K Meta+K"
-                className="flex items-center gap-3 text-[15px] leading-none font-medium text-white transition-opacity hover:opacity-70"
+                className="flex items-center gap-2 text-[15px] leading-none font-medium text-white transition-opacity hover:opacity-70"
               >
                 <Image src="/svg/command.svg" alt="" width={24} height={24} />
                 <span className="max-sm:hidden">
@@ -134,7 +134,7 @@ export default function Nav({ locale, items, hire, t }: Props) {
                 hrefLang={otherLocale}
                 aria-label={t.switchLanguage}
                 onClick={() => rememberLocale(otherLocale)}
-                className="flex items-center gap-3 text-[15px] leading-none font-medium text-white uppercase transition-opacity hover:opacity-70"
+                className="flex items-center gap-2 text-[15px] leading-none font-medium text-white uppercase transition-opacity hover:opacity-70"
               >
                 <Image src="/svg/translate.svg" alt="" width={24} height={24} />
                 {otherLocale}
