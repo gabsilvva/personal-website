@@ -5,6 +5,7 @@ export const socialIcons = [
   { label: 'WhatsApp', value: 'whatsapp' },
   { label: 'Reddit', value: 'reddit' },
   { label: 'Spotify', value: 'spotify' },
+  { label: 'Amazon', value: 'amazon' },
   { label: 'DEV.to', value: 'devto' },
   { label: 'Dribbble', value: 'dribbble' },
   { label: 'GitHub', value: 'github' },

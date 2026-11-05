@@ -137,6 +137,7 @@ export const enum_settings_socials_icon = pgEnum('enum_settings_socials_icon', [
   'instagram',
   'strava',
   'setup',
+  'amazon',
 ])
 
 export const pages = pgTable(

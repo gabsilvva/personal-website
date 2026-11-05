@@ -1080,6 +1080,7 @@ export interface Setting {
               | 'instagram'
               | 'strava'
               | 'setup'
+              | 'amazon'
             )
           | null;
         showInFooter?: boolean | null;
