@@ -74,7 +74,10 @@
 }
 
 /* Desktop windows tall enough for a section pinned to the viewport (see the Process section) */
-@custom-variant pin (@media (width >= 1024px) and (height >= 780px));
+@custom-variant pin (@media (width >= 1024px) and (height >= 640px));
+/* Pinned, but too short for the full-size layout (e.g. laptops with the browser chrome and Dock):
+   the pinned section compacts its type and spacing to fit */
+@custom-variant pin-short (@media (width >= 1024px) and (640px <= height < 780px));
 
 :root {
   /* Fraunces is used with its "wonky" alternates throughout the design */

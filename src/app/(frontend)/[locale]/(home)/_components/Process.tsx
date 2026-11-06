@@ -18,13 +18,14 @@ type Props = {
 const number = (index: number) => String(index + 1).padStart(2, '0')
 
 // Same query as the `pin` variant in globals.css
-const PIN_QUERY = '(min-width: 1024px) and (min-height: 780px)'
+const PIN_QUERY = '(min-width: 1024px) and (min-height: 640px)'
 const isPinned = () => window.matchMedia(PIN_QUERY).matches
 
 /**
  * "Do Pixel // Ao Código." — on desktop the section pins to the viewport and scrolling walks
  * through the steps: the active one sits in the middle column, its neighbours blurred on the sides.
- * Desktop windows too short to pin keep the carousel and change steps on click.
+ * Short desktop windows (`pin-short`, e.g. laptops) pin a compacted layout; windows too short
+ * even for that keep the carousel and change steps on click.
  * On mobile the steps are a plain vertical timeline.
  */
 export default function Process({ title, steps, hire }: Props) {
@@ -93,18 +94,19 @@ export default function Process({ title, steps, hire }: Props) {
       style={{ '--steps': count } as React.CSSProperties}
       className="mt-between pin:mt-30 pin:h-[calc(100vh+(var(--steps)-1)*70vh)] max-sm:mt-between-mob"
     >
-      <div className="[--gap:5rem] pin:sticky pin:top-0 pin:flex pin:h-screen pin:flex-col pin:justify-center pin:pt-nav pin:[--gap:clamp(1.5rem,5vh,5rem)]">
+      {/* --box: height of the step header row */}
+      <div className="[--box:7.5rem] [--gap:5rem] pin:sticky pin:top-0 pin:flex pin:h-screen pin:flex-col pin:justify-center pin:pt-nav pin:[--gap:clamp(1.5rem,5vh,5rem)] pin-short:[--box:12vh] pin-short:[--gap:3vh]">
         <Container>
           {/* While pinned, the title and gaps shrink with the window height so everything fits */}
           {title && (
-            <h2 className="text-h1 text-center pin:text-[min(6rem,10vh)]">
+            <h2 className="text-h1 text-center pin:text-[min(6rem,10vh)] pin-short:text-[8vh]">
               <Highlight text={title} />
             </h2>
           )}
 
           {/* Desktop: carousel */}
-          <div className="@container relative mt-25 pin:mt-[clamp(2rem,6vh,6.25rem)] max-sm:hidden">
-            <div className="absolute inset-x-0 top-0 h-30 border border-light-black bg-light-black/32" />
+          <div className="@container relative mt-25 pin:mt-[clamp(2rem,6vh,6.25rem)] pin-short:mt-[4vh] max-sm:hidden">
+            <div className="absolute inset-x-0 top-0 h-(--box) border border-light-black bg-light-black/32" />
 
             <div className="overflow-hidden">
               <ol
@@ -126,7 +128,7 @@ export default function Process({ title, steps, hire }: Props) {
                         tabIndex={visible ? 0 : -1}
                         aria-current={index === current ? 'step' : undefined}
                         onClick={() => goTo(stepIndex)}
-                        className="flex h-30 w-full items-center justify-center gap-6"
+                        className="flex h-(--box) w-full items-center justify-center gap-6"
                       >
                         <span className="relative flex size-16 items-center justify-center">
                           <Image src="/svg/step.svg" alt="" width={64} height={64} className="absolute inset-0" />
@@ -137,7 +139,9 @@ export default function Process({ title, steps, hire }: Props) {
                         <span className="font-display text-[40px] leading-none text-white">{step.title}</span>
                       </button>
                       {step.text && (
-                        <p className="mx-auto mt-(--gap) max-w-[375px] px-4 text-center">{step.text}</p>
+                        <p className="mx-auto mt-(--gap) max-w-[375px] px-4 text-center pin-short:max-w-none pin-short:leading-[1.6]">
+                          {step.text}
+                        </p>
                       )}
                     </li>
                   )
@@ -146,7 +150,7 @@ export default function Process({ title, steps, hire }: Props) {
             </div>
 
             {/* The active step is always the middle column */}
-            <span className="absolute top-[118px] left-1/3 h-px w-1/3 bg-white" />
+            <span className="absolute top-[calc(var(--box)-2px)] left-1/3 h-px w-1/3 bg-white" />
 
             {/* Neighbours are blurred and darkened towards the edges */}
             <div className="pointer-events-none absolute top-px bottom-[calc(-1*(var(--gap)+4.5rem))] left-px w-[calc(100%/3-1px)] bg-linear-to-r from-black/50 from-[1.663%] to-transparent backdrop-blur-[4px]" />
