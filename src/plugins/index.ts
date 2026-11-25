@@ -32,7 +32,10 @@ export const plugins: Plugin[] = [
     // Keep the plugin's fields (e.g. media.prefix) in the schema even without a token,
     // so migrations generated locally match the production schema.
     alwaysInsertFields: true,
-    collections: { media: true },
+    // Media URLs point straight at the public Blob CDN instead of /api/media/file, which ran a
+    // function and a database query per image. Cold starts of that function sometimes failed
+    // the image optimizer's fetch, so images randomly did not load.
+    collections: { media: { disablePayloadAccessControl: true } },
     token: process.env.BLOB_READ_WRITE_TOKEN,
     // Upload straight from the browser to bypass Vercel's 4.5MB request body limit
     clientUploads: true,

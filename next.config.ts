@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
     ],
     qualities: [75, 100],
     remotePatterns: [
+      // Uploaded media, served from the public Vercel Blob store
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)
 
